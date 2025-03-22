@@ -21,6 +21,9 @@ public class Budget {
     @Column(name = "amount", nullable = false)
     private BigDecimal amount;
 
+    @Column(name = "description", nullable = true)
+    private String description;
+
     @Column(name = "created_at", nullable = false)
     private LocalDate createdAt = LocalDate.now();
 

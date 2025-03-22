@@ -47,6 +47,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th>Amount</th>
+                                                <th>Description</th>
                                                 <th>Created At</th>
                                                 <th>Created By</th>
                                                 <th>Actions</th>
@@ -56,6 +57,7 @@
                                             <tr th:if="${budgets != null}" th:each="budget : ${budgets}">
                                                 <td th:text="${budget.id}"></td>
                                                 <td th:text="${budget.amount}"></td>
+                                                <td th:text="${budget.description}"></td>
                                                 <td th:text="${budget.createdAt}"></td>
                                                 <td th:text="${budget.createdBy.username}"></td>
                                                 <td>
