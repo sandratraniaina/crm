@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.groups.Default;
 import site.easy.to.build.crm.customValidations.customer.UniqueEmail;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -79,6 +80,14 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Budget> budgets;
+
+    public double getTotalBudget() {
+        double total = 0;
+        for (Budget budget : budgets) {
+            total += budget.getAmount().doubleValue();
+        }
+        return total;
+    }
 
     public Customer() {
     }

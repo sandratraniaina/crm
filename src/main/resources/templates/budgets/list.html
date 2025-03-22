@@ -38,6 +38,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Budgets for <span th:text="${customer.name}"></span></h4>
+                                <div>
+                                    <h2 th:text="${customer.getTotalBudget() + ' Ar'}">Total</h2>
+                                </div>
                                 <div class="table-responsive m-t-40">
                                     <table id="config-table" class="table display table-bordered table-striped no-wrap">
                                         <thead>
