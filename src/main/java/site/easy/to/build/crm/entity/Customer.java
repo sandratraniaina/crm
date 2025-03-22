@@ -9,19 +9,22 @@ import jakarta.validation.groups.Default;
 import site.easy.to.build.crm.customValidations.customer.UniqueEmail;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
 public class Customer {
 
-    public interface CustomerUpdateValidationGroupInclusion {}
+    public interface CustomerUpdateValidationGroupInclusion {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "customer_id")
     private Integer customerId;
 
     @Column(name = "name")
-    @NotBlank(message = "Name is required", groups = {Default.class, CustomerUpdateValidationGroupInclusion.class})
+    @NotBlank(message = "Name is required", groups = { Default.class, CustomerUpdateValidationGroupInclusion.class })
     private String name;
 
     @Column(name = "email")
@@ -46,7 +49,7 @@ public class Customer {
     private String state;
 
     @Column(name = "country")
-    @NotBlank(message = "Country is required", groups = {Default.class, CustomerUpdateValidationGroupInclusion.class})
+    @NotBlank(message = "Country is required", groups = { Default.class, CustomerUpdateValidationGroupInclusion.class })
     private String country;
 
     @Column(name = "description")
@@ -62,7 +65,7 @@ public class Customer {
     private String youtube;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable=false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnoreProperties("customer")
     private User user;
 
@@ -74,12 +77,17 @@ public class Customer {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Budget> budgets;
+
     public Customer() {
     }
 
-    public Customer(String name, String email, String position, String phone, String address, String city, String state, String country,
-                    String description, String twitter, String facebook, String youtube, User user, CustomerLoginInfo customerLoginInfo,
-                    LocalDateTime createdAt) {
+    public Customer(String name, String email, String position, String phone, String address, String city, String state,
+            String country,
+            String description, String twitter, String facebook, String youtube, User user,
+            CustomerLoginInfo customerLoginInfo,
+            LocalDateTime createdAt) {
         this.name = name;
         this.email = email;
         this.position = position;
@@ -225,17 +233,25 @@ public class Customer {
         this.createdAt = createdAt;
     }
 
-//    public List<Ticket> getTickets() {
-//        return tickets;
-//    }
-//
-//    public void addTicket(Ticket ticket) {
-//        this.tickets.add(ticket);
-//    }
-//    public void deleteTicket(Ticket ticket) {
-//        this.tickets.remove(ticket);
-//    }
-//    public void setTickets(List<Ticket> tickets) {
-//        this.tickets = tickets;
-//    }
+    public List<Budget> getBudgets() {
+        return budgets;
+    }
+
+    public void setBudgets(List<Budget> budgets) {
+        this.budgets = budgets;
+    }
+
+    // public List<Ticket> getTickets() {
+    // return tickets;
+    // }
+    //
+    // public void addTicket(Ticket ticket) {
+    // this.tickets.add(ticket);
+    // }
+    // public void deleteTicket(Ticket ticket) {
+    // this.tickets.remove(ticket);
+    // }
+    // public void setTickets(List<Ticket> tickets) {
+    // this.tickets = tickets;
+    // }
 }
