@@ -123,6 +123,11 @@
                                             <br>
                                             <p class="text-muted" th:text="${customer.country}"></p>
                                         </div>
+                                        <div class="col-md-3 col-xs-6"> <strong>Budget</strong>
+                                            <br>
+                                            <p class="text-muted" th:text="${customer.getTotalBudget}"></p>
+                                            <p><a th:href="${home + 'customers/' + customer.customerId + '/budgets'}">Details</a></p>
+                                        </div>
                                     </div>
                                     <hr>
                                     <p class="m-t-30" th:utext="${customer.description}"></p>
