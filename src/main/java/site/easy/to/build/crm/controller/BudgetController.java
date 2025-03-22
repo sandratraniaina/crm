@@ -6,6 +6,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import site.easy.to.build.crm.entity.Budget;
 import site.easy.to.build.crm.entity.Customer;
 import site.easy.to.build.crm.entity.User;
@@ -95,6 +97,18 @@ public class BudgetController {
         budgetService.createBudget(budget);
 
         // Redirect to the customer's budgets list
+        return "redirect:/customers/" + customerId + "/budgets";
+    }
+
+    @GetMapping("/{id}/budgets/{budgetId}/delete")
+    public String deleteBudget(@PathVariable("id") Integer customerId, @PathVariable("budgetId") Integer budgetId, RedirectAttributes redirectAttributes) {
+        try {
+            budgetService.deleteBudget(budgetId);
+            redirectAttributes.addAttribute("successMessage", "Budget deleted successfully");
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("errorMessage", "There was an error while deleting the budget");
+        }
+
         return "redirect:/customers/" + customerId + "/budgets";
     }
 }
