@@ -1,6 +1,7 @@
 package site.easy.to.build.crm.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class Budget {
     private Integer id;
 
     @Column(name = "amount", nullable = false)
+    @DecimalMin(value = "0", message = "Amount must be greater than 0")
     private BigDecimal amount;
 
     @Column(name = "description", nullable = true)
