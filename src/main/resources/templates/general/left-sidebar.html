@@ -121,7 +121,6 @@
                         <span class="hide-menu">Leads</span>
                     </a>
                     <ul class="collapse">
-                        <!--                        <li><a href="/all-customers">All customers</a></li>-->
                         <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/lead/manager/all-leads'}">All Leads</a></li>
                         <li><a th:href="${home + 'employee/lead/assigned-leads'}">Assigned Leads</a></li>
                         <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/lead/created-leads'}">Created Leads</a></li>
@@ -135,7 +134,6 @@
                         <span class="hide-menu">Contracts</span>
                     </a>
                     <ul class="collapse">
-                        <!--                        <li><a href="/all-customers">All customers</a></li>-->
                         <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/contract/manager/show-all'}">All contracts</a></li>
                         <li><a th:href="${home + 'employee/contract/my-contracts'}">My contracts</a></li>
                         <li><a th:href="${home + 'employee/contract/create'}">Create new contract</a></li>
@@ -148,11 +146,18 @@
                         <span class="hide-menu">Templates</span>
                     </a>
                     <ul class="collapse">
-                        <!--                        <li><a href="/all-customers">All customers</a></li>-->
                         <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/email-template/manager/show-all'}">All Templates</a></li>
                         <li><a th:href="${home + 'employee/email-template/my-templates'}">My Templates</a></li>
                         <li><a th:href="${home + 'employee/email-template/create'}">Create Template</a></li>
                     </ul>
+                </li>
+                <!-- New Section for Database Reset -->
+                <li class="nav-small-cap" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">--- System Operations</li>
+                <li th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
+                    <a class="waves-effect waves-dark" th:href="${home + 'employee/reset/database'}">
+                        <i class="fas fa-trash-restore"></i>
+                        <span class="hide-menu">Reset Database</span>
+                    </a>
                 </li>
             </ul>
             <ul id="sidebarnav" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}">
@@ -193,7 +198,6 @@
                         <span class="hide-menu">My Tickets</span>
                     </a>
                 </li>
-
                 <li class="nav-small-cap">--- Leads</li>
                 <li>
                     <a class="waves-effect waves-dark" th:href="${home + 'customer/my-leads'}">
@@ -201,7 +205,6 @@
                         <span class="hide-menu">My Leads</span>
                     </a>
                 </li>
-
                 <li class="nav-small-cap">--- Contracts</li>
                 <li>
                     <a class="waves-effect waves-dark" th:href="${home + 'customer/my-contracts'}">
