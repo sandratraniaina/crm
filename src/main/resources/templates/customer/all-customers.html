@@ -107,6 +107,7 @@
                                                 <td><a th:href="${home + 'employee/customer/' + customer.customerId}"><i
                                                             class="fas fa-eye"></i></a></td>
                                                 <td th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
+                                                    <p th:text="${customer.getTotalBudget()}"></p>
                                                     <a th:href="${home + 'customers/' + customer.customerId + '/budgets'}"><i
                                                             class="fas fa-wallet"></i></a>
                                                             <a th:href="${home + 'customers/' + customer.customerId + '/budgets/create'}"><i
