@@ -6,9 +6,7 @@
     <meta name="_csrf" content="${_csrf.token}" />
     <meta name="_csrf_header" content="${_csrf.headerName}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap-wysihtml5.css}" />
-    <!-- Custom CSS -->
     <link th:href="@{/css/style.min.css}" rel="stylesheet">
-    <!-- page css -->
     <link th:href="@{/css/pages/inbox.css}" rel="stylesheet">
     <link th:href="@{/css/ribbon-page.css}" rel="stylesheet">
 </head>
@@ -31,6 +29,10 @@
 
                 <div class="row">
                     <div class="col-lg-12">
+                        <!-- Display Flash Messages (for non-validation errors) -->
+                        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Create Budget for <span th:text="${customer.name}"></span></h4>
@@ -40,19 +42,20 @@
                                     <label class="m-t-20" for="amount">Amount:</label>
                                     <div class="input-group">
                                         <input type="number" step="0.01" id="amount" th:field="*{amount}"
-                                            class="form-control" required />
+                                            class="form-control" required /> <br>
                                     </div>
-                                    <label class="m-t-20" for="amount">Description:</label>
+                                    <p class="text-danger font-weight-bold" th:if="${#fields.hasErrors('amount')}"
+                                        th:errors="*{amount}"></p>
+                                    <label class="m-t-20" for="description">Description:</label>
                                     <div class="input-group">
-                                        <textarea type="number" step="0.01" id="amount" th:field="*{description}"
-                                            class="form-control" required ></textarea>
-                                    </div>
-                                    <div class="input-group">
+                                        <textarea id="description" th:field="*{description}" class="form-control"
+                                            required></textarea>
                                         <span class="text-danger font-weight-bold"
-                                            th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></span>
+                                            th:if="${#fields.hasErrors('description')}"
+                                            th:errors="*{description}"></span>
                                     </div>
 
-                                    <!-- Hidden field for customer (optional, as it's set in controller) -->
+                                    <!-- Hidden field for customer -->
                                     <input type="hidden" th:field="*{customer}" th:value="${customer.customerId}" />
 
                                     <button type="submit" class="btn btn-primary m-t-20">Create Budget</button>

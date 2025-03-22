@@ -1,11 +1,13 @@
 package site.easy.to.build.crm.controller;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid; // Add this import
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult; // Add this import
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,8 +29,8 @@ public class BudgetController {
 
     private final BudgetService budgetService;
     private final CustomerService customerService;
-    private final UserService userService; // Added to fetch User entity
-    private final AuthenticationUtils authenticationUtils; // Added for user ID retrieval
+    private final UserService userService;
+    private final AuthenticationUtils authenticationUtils;
 
     @Autowired
     public BudgetController(BudgetService budgetService, CustomerService customerService,
@@ -40,75 +42,85 @@ public class BudgetController {
         this.authenticationUtils = authenticationUtils;
     }
 
-    // GET /customers/{id}/budgets - Show budgets for a specific customer
     @GetMapping("/{id}/budgets")
     public String showBudgetsByCustomer(@PathVariable("id") Integer customerId, Model model) {
         List<Budget> budgets = budgetService.findByCustomerId(customerId);
-        Customer customer = customerService.findByCustomerId(customerId); // Updated to findById
+        Customer customer = customerService.findByCustomerId(customerId);
 
         model.addAttribute("budgets", budgets);
         model.addAttribute("customer", customer);
-        return "budgets/list"; // Thymeleaf template: budgets/list.html
+        return "budgets/list";
     }
 
-    // GET /customers/budgets - Show all budgets (across all customers)
     @GetMapping("/budgets")
     public String showAllBudgets(Model model) {
         List<Budget> budgets = budgetService.findAll();
         model.addAttribute("budgets", budgets);
-        return "budgets/all"; // Thymeleaf template: budgets/all.html
+        return "budgets/all";
     }
 
-    // GET /customers/{id}/budgets/create - Show form to create a new budget
     @GetMapping("/{id}/budgets/create")
     public String showCreateBudgetForm(@PathVariable("id") Integer customerId, Model model) {
-        Customer customer = customerService.findByCustomerId(customerId); // Updated to findById
+        Customer customer = customerService.findByCustomerId(customerId);
 
         Budget budget = new Budget();
         budget.setCustomer(customer);
 
         model.addAttribute("budget", budget);
         model.addAttribute("customer", customer);
-        return "budgets/create"; // Thymeleaf template: budgets/create.html
+        return "budgets/create";
     }
 
-    // POST /customers/{id}/budgets/create - Process budget creation
     @PostMapping("/{id}/budgets/create")
     public String createBudget(@PathVariable("id") Integer customerId,
-            @ModelAttribute("budget") Budget budget,
-            Authentication authentication) {
-        // Get the currently logged-in user ID using AuthenticationUtils
-        int loggedInUserId = authenticationUtils.getLoggedInUserId(authentication);
-        if (loggedInUserId == -1) {
-            throw new IllegalStateException("No logged-in user found");
+            @Valid @ModelAttribute("budget") Budget budget, // Add @Valid here
+            BindingResult bindingResult, // Add BindingResult to capture validation errors
+            Authentication authentication,
+            RedirectAttributes redirectAttributes,
+            Model model) { // Add Model for returning to the form
+        // Check for validation errors first
+        if (bindingResult.hasErrors()) {
+            // Add customer to the model so the form can render again
+            Customer customer = customerService.findByCustomerId(customerId);
+            model.addAttribute("customer", customer);
+            return "budgets/create"; // Return to the form with field errors
         }
 
-        // Fetch the User entity using UserService
-        User createdBy = userService.findById(loggedInUserId);
-        if (createdBy == null) {
-            throw new IllegalStateException("Logged-in user not found in database");
+        try {
+            int loggedInUserId = authenticationUtils.getLoggedInUserId(authentication);
+            if (loggedInUserId == -1) {
+                throw new IllegalStateException("No logged-in user found");
+            }
+
+            User createdBy = userService.findById(loggedInUserId);
+            if (createdBy == null) {
+                throw new IllegalStateException("Logged-in user not found in database");
+            }
+
+            Customer customer = customerService.findByCustomerId(customerId);
+            budget.setCustomer(customer);
+            budget.setCreatedBy(createdBy);
+            budget.setCreatedAt(LocalDate.now());
+
+            budgetService.createBudget(budget);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            redirectAttributes.addFlashAttribute("budget", budget);
+            return "redirect:/customers/" + customerId + "/budgets/create";
         }
 
-        // Set budget properties
-        Customer customer = customerService.findByCustomerId(customerId); // Updated to findById
-        budget.setCustomer(customer);
-        budget.setCreatedBy(createdBy);
-        budget.setCreatedAt(LocalDate.now()); // Ensure created_at is set
-
-        // Save the budget
-        budgetService.createBudget(budget);
-
-        // Redirect to the customer's budgets list
+        redirectAttributes.addFlashAttribute("successMessage", "Budget added successfully");
         return "redirect:/customers/" + customerId + "/budgets";
     }
 
     @GetMapping("/{id}/budgets/{budgetId}/delete")
-    public String deleteBudget(@PathVariable("id") Integer customerId, @PathVariable("budgetId") Integer budgetId, RedirectAttributes redirectAttributes) {
+    public String deleteBudget(@PathVariable("id") Integer customerId, @PathVariable("budgetId") Integer budgetId,
+            RedirectAttributes redirectAttributes) {
         try {
             budgetService.deleteBudget(budgetId);
-            redirectAttributes.addAttribute("successMessage", "Budget deleted successfully");
+            redirectAttributes.addFlashAttribute("successMessage", "Budget deleted successfully");
         } catch (Exception e) {
-            redirectAttributes.addAttribute("errorMessage", "There was an error while deleting the budget");
+            redirectAttributes.addFlashAttribute("errorMessage", "There was an error while deleting the budget");
         }
 
         return "redirect:/customers/" + customerId + "/budgets";

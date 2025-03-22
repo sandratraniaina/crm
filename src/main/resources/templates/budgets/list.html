@@ -37,6 +37,7 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
+                                <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
                                 <h4 class="card-title">Budgets for <span th:text="${customer.name}"></span></h4>
                                 <div>
                                     <h2 th:text="${customer.getTotalBudget() + ' Ar'}">Total</h2>
