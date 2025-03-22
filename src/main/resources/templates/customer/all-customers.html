@@ -92,7 +92,7 @@
                                                 <th>Phone</th>
                                                 <th>Country</th>
                                                 <th>Show Full Details</th>
-                                                <th>Show Budgets</th>
+                                                <th>Budgets</th>
                                                 <th th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
                                                     Delete</th>
                                             </tr>
@@ -109,6 +109,8 @@
                                                 <td th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
                                                     <a th:href="${home + 'customers/' + customer.customerId + '/budgets'}"><i
                                                             class="fas fa-wallet"></i></a>
+                                                            <a th:href="${home + 'customers/' + customer.customerId + '/budgets/create'}"><i
+                                                                class="fas fa-plus"></i></a>
                                                 </td>
                                                 <td th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
                                                     <form
