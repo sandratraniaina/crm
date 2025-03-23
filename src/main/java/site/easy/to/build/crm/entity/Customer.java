@@ -83,10 +83,10 @@ public class Customer {
     private List<Budget> budgets;
 
     @OneToMany(mappedBy = "customer")
-    private List<LeadExpense> leadExpenses;
+    private List<Lead> leads;
 
     @OneToMany(mappedBy = "customer")
-    private List<TicketExpense> ticketExpenses;
+    private List<Ticket> tickets;
 
     public double getTotalBudget() {
         double total = 0;
@@ -257,22 +257,22 @@ public class Customer {
         this.budgets = budgets;
     }
 
-    public List<LeadExpense> getLeadExpenses() {
-        return leadExpenses;
+    public List<Lead> getLeads() {
+        return leads;
     }
 
-    public void setLeadExpenses(List<LeadExpense> leadExpenses) {
-        this.leadExpenses = leadExpenses;
+    public void setLeads(List<Lead> leads) {
+        this.leads = leads;
     }
 
-    public List<TicketExpense> getTicketExpenses() {
-        return ticketExpenses;
+    public List<Ticket> getTickets() {
+        return tickets;
     }
 
-    public void setTicketExpenses(List<TicketExpense> ticketExpenses) {
-        this.ticketExpenses = ticketExpenses;
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
     }
-
+    
     // public List<Ticket> getTickets() {
     // return tickets;
     // }
