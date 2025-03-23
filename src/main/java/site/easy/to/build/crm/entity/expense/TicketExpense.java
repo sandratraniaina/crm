@@ -5,6 +5,7 @@ import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import site.easy.to.build.crm.entity.Customer;
 import site.easy.to.build.crm.entity.Ticket;
 import site.easy.to.build.crm.entity.User;
 
@@ -35,6 +36,10 @@ public class TicketExpense {
 
     @Column(name = "expense_date", nullable = false)
     private LocalDate expenseDate = LocalDate.now();
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)

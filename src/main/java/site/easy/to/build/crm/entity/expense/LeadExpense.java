@@ -5,13 +5,13 @@ import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import site.easy.to.build.crm.entity.Customer;
 import site.easy.to.build.crm.entity.Lead;
+import site.easy.to.build.crm.entity.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-import org.springframework.security.core.userdetails.User;
 
 @Entity
 @Table(name = "lead_expense")
@@ -36,6 +36,10 @@ public class LeadExpense {
 
     @Column(name = "expense_date", nullable = false)
     private LocalDate expenseDate = LocalDate.now();
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
