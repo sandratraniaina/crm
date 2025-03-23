@@ -88,6 +88,9 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Ticket> tickets;
 
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CustomerFinancialSummary financialSummary;
+
     public double getTotalBudget() {
         double total = 0;
         for (Budget budget : budgets) {

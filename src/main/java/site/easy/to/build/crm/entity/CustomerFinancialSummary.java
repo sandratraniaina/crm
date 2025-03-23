@@ -22,7 +22,8 @@ public class CustomerFinancialSummary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
+    @MapsId // Shares the customer_id as the primary key
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
