@@ -8,8 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+import org.springframework.data.annotation.Immutable;
+
 @Entity
-@Table(name = "customer_financial_summary")
+@Table(name = "v_customer_financial_summary")
+@Immutable
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
