@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.groups.Default;
 import site.easy.to.build.crm.customValidations.customer.UniqueEmail;
+import site.easy.to.build.crm.entity.expense.LeadExpense;
+import site.easy.to.build.crm.entity.expense.TicketExpense;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -80,6 +82,12 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Budget> budgets;
+
+    @OneToMany(mappedBy = "customer")
+    private List<LeadExpense> leadExpenses;
+
+    @OneToMany(mappedBy = "customer")
+    private List<TicketExpense> ticketExpenses;
 
     public double getTotalBudget() {
         double total = 0;
