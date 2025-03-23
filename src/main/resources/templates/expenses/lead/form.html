@@ -38,7 +38,7 @@
                                     th:text="${expense.id != null ? 'Edit Expense for Lead: ' + lead.name : 'Create Expense for Lead: ' + lead.name}">
                                 </h4>
                                 <div th:if="${warning == true}" class="alert alert-warning">
-                                    Warning: Customer's ticket expense threshold has been reached
+                                    Warning: Customer's expense threshold has been reached
                                 </div>
                                 <div th:if="${confirmationMessage != null}" class="alert alert-warning" th:text="${confirmationMessage}">
 
