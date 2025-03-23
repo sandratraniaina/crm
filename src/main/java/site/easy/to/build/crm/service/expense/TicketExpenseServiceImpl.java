@@ -6,7 +6,6 @@ import site.easy.to.build.crm.entity.expense.TicketExpense;
 import site.easy.to.build.crm.repository.expense.TicketExpenseRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TicketExpenseServiceImpl implements TicketExpenseService {
@@ -24,8 +23,8 @@ public class TicketExpenseServiceImpl implements TicketExpenseService {
     }
 
     @Override
-    public Optional<TicketExpense> findById(Integer id) {
-        return ticketExpenseRepository.findById(id);
+    public TicketExpense findById(Integer id) {
+        return ticketExpenseRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Expense not found"));
     }
 
     @Override

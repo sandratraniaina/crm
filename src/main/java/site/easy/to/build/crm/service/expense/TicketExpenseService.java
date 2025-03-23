@@ -2,7 +2,6 @@ package site.easy.to.build.crm.service.expense;
 
 import site.easy.to.build.crm.entity.expense.TicketExpense;
 import java.util.List;
-import java.util.Optional;
 
 public interface TicketExpenseService {
 
@@ -10,7 +9,7 @@ public interface TicketExpenseService {
     TicketExpense createTicketExpense(TicketExpense ticketExpense);
 
     // Read
-    Optional<TicketExpense> findById(Integer id);
+    TicketExpense findById(Integer id);
     List<TicketExpense> findAll();
     List<TicketExpense> findByTicketId(Integer ticketId);
 
