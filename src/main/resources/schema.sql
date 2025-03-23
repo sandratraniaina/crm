@@ -575,7 +575,7 @@ SELECT
     COALESCE(SUM(b.amount), 0) AS total_budget,
     COALESCE(SUM(te.amount), 0) AS total_ticket_expense,
     COALESCE(SUM(le.amount), 0) AS total_lead_expense,
-    COALESCE(SUM(te.amount) + SUM(le.amount), 0) AS total_expense,
+    COALESCE(SUM(te.amount), 0) + COALESCE(SUM(le.amount), 0) AS total_expense,
     COALESCE(SUM(b.amount), 0) - (COALESCE(SUM(te.amount), 0) + COALESCE(SUM(le.amount), 0)) AS remaining_budget
 FROM 
     crm.customer c
