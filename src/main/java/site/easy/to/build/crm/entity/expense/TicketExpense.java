@@ -38,10 +38,6 @@ public class TicketExpense {
     private LocalDate expenseDate = LocalDate.now();
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
-
-    @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
     private User createdBy;
 
