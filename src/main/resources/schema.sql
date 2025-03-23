@@ -592,6 +592,14 @@ GROUP BY
     c.customer_id;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE IF NOT EXISTS `crm`.`expense_threshold` (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `value` DECIMAL(2,1) DEFAULT (0.8) NOT NULL
+) ENGINE=InnoDB;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
