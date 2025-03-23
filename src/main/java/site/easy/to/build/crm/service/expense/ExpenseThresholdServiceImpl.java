@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import site.easy.to.build.crm.entity.Customer;
+import site.easy.to.build.crm.entity.CustomerFinancialSummary;
 import site.easy.to.build.crm.entity.expense.ExpenseThreshold;
 import site.easy.to.build.crm.repository.expense.ExpenseThresholdRepository;
 
@@ -40,5 +42,17 @@ public class ExpenseThresholdServiceImpl implements ExpenseThresholdService {
             threshold.setValue(BigDecimal.valueOf(0.8));
             thresholdRepository.save(threshold);
         }
+    }
+
+    @Override
+    public boolean isThresholdExceeded(Customer customer) {
+        CustomerFinancialSummary summary = customer.getFinancialSummary();
+        return summary.isThresholdExceeded(getThresholdValue());
+    }
+
+    @Override
+    public boolean isBudgetExceeded(Customer customer, BigDecimal newValue) {
+        CustomerFinancialSummary summary = customer.getFinancialSummary();
+        return summary.isBudgetExceeded(newValue);
     }
 }
