@@ -3,9 +3,10 @@ package site.easy.to.build.crm.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import org.hibernate.mapping.ToOne;
+import site.easy.to.build.crm.entity.expense.TicketExpense;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "trigger_ticket")
@@ -44,6 +45,10 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToMany
+    @JoinColumn(name = "ticket_id")
+    private List<TicketExpense> ticketExpenses;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -132,5 +137,13 @@ public class Ticket {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<TicketExpense> getTicketExpenses() {
+        return ticketExpenses;
+    }
+
+    public void setTicketExpenses(List<TicketExpense> ticketExpenses) {
+        this.ticketExpenses = ticketExpenses;
     }
 }
