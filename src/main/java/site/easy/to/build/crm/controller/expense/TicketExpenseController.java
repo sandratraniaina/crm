@@ -10,14 +10,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import site.easy.to.build.crm.entity.Customer;
+import site.easy.to.build.crm.entity.CustomerFinancialSummary;
 import site.easy.to.build.crm.entity.Ticket;
 import site.easy.to.build.crm.entity.User;
 import site.easy.to.build.crm.entity.expense.TicketExpense;
+import site.easy.to.build.crm.service.expense.ExpenseThresholdService;
 import site.easy.to.build.crm.service.expense.TicketExpenseService;
 import site.easy.to.build.crm.service.ticket.TicketService;
 import site.easy.to.build.crm.service.user.UserService;
 import site.easy.to.build.crm.util.AuthenticationUtils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Controller
@@ -29,15 +34,17 @@ public class TicketExpenseController {
     private final TicketService ticketService;
     private final UserService userService;
     private final AuthenticationUtils authenticationUtils;
+    private final ExpenseThresholdService expenseThresholdService;
 
     @Autowired
     public TicketExpenseController(TicketExpenseService ticketExpenseService, TicketService ticketService,
                                    UserService userService, AuthenticationUtils authenticationUtils,
-                                   HttpSession session) {
+                                   HttpSession session, ExpenseThresholdService expenseThresholdService) {
         this.ticketExpenseService = ticketExpenseService;
         this.ticketService = ticketService;
         this.userService = userService;
         this.authenticationUtils = authenticationUtils;
+        this.expenseThresholdService = expenseThresholdService;
     }
 
     @GetMapping("/{id}/expenses")
@@ -54,6 +61,12 @@ public class TicketExpenseController {
                                   @RequestParam(value = "expenseId", required = false) Integer expenseId,
                                   Model model) {
         Ticket ticket = ticketService.findByTicketId(ticketId);
+
+        Customer customer = ticket.getCustomer();
+        CustomerFinancialSummary summary = customer.getFinancialSummary();
+        BigDecimal threshold = expenseThresholdService.getThresholdValue();
+
+        model.addAttribute("warning", summary.isThresholdExceeded(threshold));
 
         TicketExpense expense;
         if (expenseId != null) {
