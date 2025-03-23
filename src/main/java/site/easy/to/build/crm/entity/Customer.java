@@ -10,7 +10,6 @@ import site.easy.to.build.crm.customValidations.customer.UniqueEmail;
 import site.easy.to.build.crm.entity.expense.LeadExpense;
 import site.easy.to.build.crm.entity.expense.TicketExpense;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -256,6 +255,22 @@ public class Customer {
 
     public void setBudgets(List<Budget> budgets) {
         this.budgets = budgets;
+    }
+
+    public List<LeadExpense> getLeadExpenses() {
+        return leadExpenses;
+    }
+
+    public void setLeadExpenses(List<LeadExpense> leadExpenses) {
+        this.leadExpenses = leadExpenses;
+    }
+
+    public List<TicketExpense> getTicketExpenses() {
+        return ticketExpenses;
+    }
+
+    public void setTicketExpenses(List<TicketExpense> ticketExpenses) {
+        this.ticketExpenses = ticketExpenses;
     }
 
     // public List<Ticket> getTickets() {
