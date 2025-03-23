@@ -3,6 +3,7 @@ package site.easy.to.build.crm.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import site.easy.to.build.crm.entity.expense.LeadExpense;
 import site.easy.to.build.crm.entity.expense.TicketExpense;
 
 import java.time.LocalDateTime;
@@ -53,10 +54,19 @@ public class Ticket {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    public double getTotalExpense() {
+        double total = 0;
+        for (TicketExpense expense : ticketExpenses) {
+            total += expense.getAmount().doubleValue();
+        }
+        return total;
+    }
+
     public Ticket() {
     }
 
-    public Ticket(String subject, String description, String status, String priority, User manager, User employee, Customer customer, LocalDateTime createdAt) {
+    public Ticket(String subject, String description, String status, String priority, User manager, User employee,
+            Customer customer, LocalDateTime createdAt) {
         this.subject = subject;
         this.description = description;
         this.status = status;

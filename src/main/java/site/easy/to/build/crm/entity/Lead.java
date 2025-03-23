@@ -65,6 +65,14 @@ public class Lead {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    public double getTotalExpense() {
+        double total = 0;
+        for (LeadExpense expense : leadExpenses) {
+            total += expense.getAmount().doubleValue();
+        }
+        return total;
+    }
+
     public Lead() {
     }
 
