@@ -276,6 +276,14 @@ public class Customer {
         this.tickets = tickets;
     }
     
+    public CustomerFinancialSummary getFinancialSummary() {
+        return financialSummary;
+    }
+
+    public void setFinancialSummary(CustomerFinancialSummary financialSummary) {
+        this.financialSummary = financialSummary;
+    }
+    
     // public List<Ticket> getTickets() {
     // return tickets;
     // }
