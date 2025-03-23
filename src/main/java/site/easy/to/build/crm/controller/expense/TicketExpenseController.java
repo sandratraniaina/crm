@@ -63,10 +63,7 @@ public class TicketExpenseController {
         Ticket ticket = ticketService.findByTicketId(ticketId);
 
         Customer customer = ticket.getCustomer();
-        CustomerFinancialSummary summary = customer.getFinancialSummary();
-        BigDecimal threshold = expenseThresholdService.getThresholdValue();
-
-        model.addAttribute("warning", summary.isThresholdExceeded(threshold));
+        model.addAttribute("warning", expenseThresholdService.isThresholdExceeded(customer));
 
         TicketExpense expense;
         if (expenseId != null) {

@@ -63,10 +63,7 @@ public class LeadExpenseController {
         Lead lead = leadService.findByLeadId(leadId);
 
         Customer customer = lead.getCustomer();
-        CustomerFinancialSummary summary = customer.getFinancialSummary();
-        BigDecimal threshold = expenseThresholdService.getThresholdValue();
-
-        model.addAttribute("warning", summary.isThresholdExceeded(threshold));
+        model.addAttribute("warning", expenseThresholdService.isThresholdExceeded(customer));
         
         LeadExpense expense;
         if (expenseId != null) {
