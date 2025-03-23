@@ -47,18 +47,14 @@ public class CustomerFinancialSummary {
     private BigDecimal remainingBudget = BigDecimal.ZERO;
 
     // Methods
+    public boolean isBudgetExceeded(BigDecimal newAmount) {
+        BigDecimal totalExpenses = totalExpense.add(newAmount);
+        return totalExpenses.compareTo(totalExpense) > 0;
+    }
+
     public boolean isThresholdExceeded(BigDecimal threshold) {
-        // Validate threshold is between 0 and 1
-        if (threshold == null || 
-            threshold.compareTo(BigDecimal.ZERO) < 0 || 
-            threshold.compareTo(BigDecimal.ONE) > 0) {
-            return false; // Invalid threshold, no exceedance
-        }
-        
-        // Calculate the threshold amount (budget * threshold)
         BigDecimal thresholdAmount = totalBudget.multiply(threshold);
         
-        // Check if total expenses exceed the threshold amount
         return totalExpense.compareTo(thresholdAmount) > 0;
     }
 

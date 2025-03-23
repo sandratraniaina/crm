@@ -67,8 +67,7 @@ public class LeadExpenseController {
         BigDecimal threshold = expenseThresholdService.getThresholdValue();
 
         model.addAttribute("warning", summary.isThresholdExceeded(threshold));
-        System.out.println("Warning: " + summary.isThresholdExceeded(threshold));
-
+        
         LeadExpense expense;
         if (expenseId != null) {
             expense = leadExpenseService.findById(expenseId);
