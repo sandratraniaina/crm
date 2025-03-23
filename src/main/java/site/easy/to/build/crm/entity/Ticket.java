@@ -3,9 +3,11 @@ package site.easy.to.build.crm.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import org.hibernate.mapping.ToOne;
+import site.easy.to.build.crm.entity.expense.LeadExpense;
+import site.easy.to.build.crm.entity.expense.TicketExpense;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "trigger_ticket")
@@ -45,13 +47,26 @@ public class Ticket {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @OneToMany
+    @JoinColumn(name = "ticket_id")
+    private List<TicketExpense> ticketExpenses;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public double getTotalExpense() {
+        double total = 0;
+        for (TicketExpense expense : ticketExpenses) {
+            total += expense.getAmount().doubleValue();
+        }
+        return total;
+    }
 
     public Ticket() {
     }
 
-    public Ticket(String subject, String description, String status, String priority, User manager, User employee, Customer customer, LocalDateTime createdAt) {
+    public Ticket(String subject, String description, String status, String priority, User manager, User employee,
+            Customer customer, LocalDateTime createdAt) {
         this.subject = subject;
         this.description = description;
         this.status = status;
@@ -132,5 +147,13 @@ public class Ticket {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<TicketExpense> getTicketExpenses() {
+        return ticketExpenses;
+    }
+
+    public void setTicketExpenses(List<TicketExpense> ticketExpenses) {
+        this.ticketExpenses = ticketExpenses;
     }
 }

@@ -85,9 +85,9 @@
                                         <th>Status</th>
                                         <th>Customer</th>
                                         <th>Assigned Employee</th>
+                                        <th>Expenses</th>
                                         <th>Show</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -98,9 +98,13 @@
                                         <td th:text="${lead.status}"></td>
                                         <td th:text="${lead.customer.name}"></td>
                                         <td th:text="${lead.employee.username}"></td>
-                                        <td><a th:href="${home + 'employee/lead/show/' + lead.leadId}"><i class="fas fa-eye"></i></a></td>
-                                        <td><a th:href="${home + 'employee/lead/update/' + lead.leadId}"><i class="fas fa-edit"></i></a></td>
                                         <td>
+                                            <a th:href="${home + 'leads/' + lead.leadId + '/expenses'}"><i class="fas fa-eye"></i></a>
+                                            <a th:href="${home + 'leads/' + lead.leadId + '/expenses/form'}"><i class="fas fa-plus"></i></a>
+                                        </td>
+                                        <td><a th:href="${home + 'employee/lead/show/' + lead.leadId}"><i class="fas fa-eye"></i></a></td>
+                                        <td>
+                                            <a th:href="${home + 'employee/lead/update/' + lead.leadId}"><i class="fas fa-edit"></i></a>
                                             <form th:action="${home + 'employee/lead/delete/' + lead.leadId}" method="post">
                                                 <button type="submit" class="btn btn-primary">
                                                     <i class="mdi mdi-delete"></i>

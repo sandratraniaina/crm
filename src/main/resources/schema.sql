@@ -18,10 +18,9 @@ USE `crm`;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
 --
 -- Table structure for table `users`
-----
+--
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -46,7 +45,6 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Table structure for table `oauth_users`
 --
 
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `oauth_users` (
@@ -70,7 +68,6 @@ CREATE TABLE IF NOT EXISTS `oauth_users` (
 --
 -- Table structure for table `user_profile`
 --
-
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -102,7 +99,6 @@ CREATE TABLE IF NOT EXISTS `user_profile` (
 -- Table structure for table `roles`
 --
 
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -132,7 +128,6 @@ UNLOCK TABLES;
 -- Table structure for table `user_roles`
 --
 
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `user_roles` (
@@ -148,7 +143,6 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 --
 -- Table structure for table `employee`
 --
-
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -167,7 +161,6 @@ CREATE TABLE IF NOT EXISTS `employee` (
 --
 -- Table structure for table `email_template`
 --
-
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -200,7 +193,11 @@ CREATE TABLE IF NOT EXISTS `customer_login_info` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `token` (`token`)
   ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-  /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `customer`
+--
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -227,12 +224,11 @@ CREATE TABLE IF NOT EXISTS `customer` (
     CONSTRAINT `customer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     CONSTRAINT `customer_ibfk_2` FOREIGN KEY (`profile_id`) REFERENCES `customer_login_info` (`id`)
   ) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-  /*!40101 SET character_set_client = @saved_cs_client */;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `trigger_lead`
 --
-
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -263,7 +259,6 @@ CREATE TABLE IF NOT EXISTS `trigger_lead` (
 -- Table structure for table `trigger_ticket`
 --
 
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `trigger_ticket` (
@@ -289,7 +284,6 @@ CREATE TABLE IF NOT EXISTS `trigger_ticket` (
 --
 -- Table structure for table `trigger_contract`
 --
-
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -320,7 +314,6 @@ CREATE TABLE IF NOT EXISTS `trigger_contract` (
 --
 -- Table structure for table `contract_settings`
 --
-
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -364,7 +357,6 @@ CREATE TABLE IF NOT EXISTS `contract_settings` (
 -- Table structure for table `lead_action`
 --
 
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `lead_action` (
@@ -378,11 +370,9 @@ CREATE TABLE IF NOT EXISTS `lead_action` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
 --
 -- Table structure for table `lead_settings`
 --
-
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -414,14 +404,9 @@ CREATE TABLE IF NOT EXISTS `lead_settings` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
-
-
-
 --
 -- Table structure for table `ticket_settings`
 --
-
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -457,7 +442,6 @@ CREATE TABLE IF NOT EXISTS `ticket_settings` (
 -- Table structure for table `file`
 --
 
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `file` (
@@ -479,7 +463,6 @@ CREATE TABLE IF NOT EXISTS `file` (
 -- Table structure for table `google_drive_file`
 --
 
-
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `google_drive_file` (
@@ -494,6 +477,135 @@ CREATE TABLE IF NOT EXISTS `google_drive_file` (
   CONSTRAINT `google_drive_file_ibfk_1` FOREIGN KEY (`lead_id`) REFERENCES `trigger_lead` (`lead_id`),
   CONSTRAINT `google_drive_file_ibfk_2` FOREIGN KEY (`contract_id`) REFERENCES `trigger_contract` (`contract_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `budget`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE IF NOT EXISTS `budget` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `amount` decimal(18,2) DEFAULT NULL,
+  `description` longtext,
+  `created_at` date DEFAULT (curdate()),
+  `created_by` int DEFAULT NULL,
+  `customer_id` int unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_budget_users` (`created_by`),
+  KEY `fk_budget_customer` (`customer_id`),
+  CONSTRAINT `fk_budget_users` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_budget_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `lead_expense`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE IF NOT EXISTS `lead_expense` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `amount` decimal(18,2) NOT NULL,
+  `description` text,
+  `created_at` timestamp NOT NULL DEFAULT (now()),
+  `expense_date` date NOT NULL DEFAULT (curdate()),
+  `created_by` int NOT NULL,
+  `lead_id` int unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_ticket_expense_users_0` (`created_by`),
+  KEY `fk_lead_expense_trigger_lead` (`lead_id`),
+  CONSTRAINT `fk_ticket_expense_users_0` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_lead_expense_trigger_lead` FOREIGN KEY (`lead_id`) REFERENCES `trigger_lead` (`lead_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ticket_expense`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE IF NOT EXISTS `ticket_expense` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `amount` decimal(18,2) NOT NULL,
+  `description` text,
+  `created_at` timestamp NOT NULL DEFAULT (now()),
+  `expense_date` date NOT NULL DEFAULT (curdate()),
+  `created_by` int NOT NULL,
+  `ticket_id` int unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_ticket_expense_users` (`created_by`),
+  KEY `fk_ticket_expense_trigger_ticket` (`ticket_id`),
+  CONSTRAINT `fk_ticket_expense_users` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ticket_expense_trigger_ticket` FOREIGN KEY (`ticket_id`) REFERENCES `trigger_ticket` (`ticket_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `customer_financial_summary`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE IF NOT EXISTS `customer_financial_summary` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` int unsigned NOT NULL,
+  `total_budget` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `total_ticket_expense` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `total_lead_expense` decimal(18,2) NOT NULL DEFAULT '0.00',
+  `remaining_budget` decimal(18,2) NOT NULL DEFAULT ((total_budget - (total_ticket_expense + total_lead_expense))),
+  PRIMARY KEY (`id`),
+  KEY `fk_customer_financial_summary_customer` (`customer_id`),
+  CONSTRAINT `fk_customer_financial_summary_customer` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- View structure for view `v_customer_financial_summary`
+--
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE OR REPLACE VIEW `v_customer_financial_summary` AS
+SELECT 
+    c.customer_id,
+    COALESCE(b.total_budget, 0) AS total_budget,
+    COALESCE(te.total_ticket_expense, 0) AS total_ticket_expense,
+    COALESCE(le.total_lead_expense, 0) AS total_lead_expense,
+    COALESCE(te.total_ticket_expense, 0) + COALESCE(le.total_lead_expense, 0) AS total_expense,
+    COALESCE(b.total_budget, 0) - (COALESCE(te.total_ticket_expense, 0) + COALESCE(le.total_lead_expense, 0)) AS remaining_budget
+FROM 
+    crm.customer c
+LEFT JOIN (
+    SELECT customer_id, SUM(amount) AS total_budget
+    FROM crm.budget
+    GROUP BY customer_id
+) b ON c.customer_id = b.customer_id
+LEFT JOIN (
+    SELECT tt.customer_id, SUM(te.amount) AS total_ticket_expense
+    FROM crm.trigger_ticket tt
+    LEFT JOIN crm.ticket_expense te ON tt.ticket_id = te.ticket_id
+    GROUP BY tt.customer_id
+) te ON c.customer_id = te.customer_id
+LEFT JOIN (
+    SELECT tl.customer_id, SUM(le.amount) AS total_lead_expense
+    FROM crm.trigger_lead tl
+    LEFT JOIN crm.lead_expense le ON tl.lead_id = le.lead_id
+    GROUP BY tl.customer_id
+) le ON c.customer_id = le.customer_id;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE IF NOT EXISTS `crm`.`expense_threshold` (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `value` DECIMAL(2,1) DEFAULT (0.8) NOT NULL
+) ENGINE=InnoDB;
+
+INSERT INTO `crm`.`expense_threshold` (value) VALUES (0.8);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

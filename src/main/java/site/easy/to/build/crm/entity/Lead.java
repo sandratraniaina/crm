@@ -3,6 +3,7 @@ package site.easy.to.build.crm.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import site.easy.to.build.crm.entity.expense.LeadExpense;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -57,8 +58,20 @@ public class Lead {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
+    @OneToMany
+    @JoinColumn(name = "lead_id")
+    private List<LeadExpense> leadExpenses;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public double getTotalExpense() {
+        double total = 0;
+        for (LeadExpense expense : leadExpenses) {
+            total += expense.getAmount().doubleValue();
+        }
+        return total;
+    }
 
     public Lead() {
     }
@@ -216,6 +229,14 @@ public class Lead {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<LeadExpense> getLeadExpenses() {
+        return leadExpenses;
+    }
+
+    public void setLeadExpenses(List<LeadExpense> leadExpenses) {
+        this.leadExpenses = leadExpenses;
     }
 }
 
