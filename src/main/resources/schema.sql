@@ -575,6 +575,7 @@ SELECT
     COALESCE(SUM(b.amount), 0) AS total_budget,
     COALESCE(SUM(te.amount), 0) AS total_ticket_expense,
     COALESCE(SUM(le.amount), 0) AS total_lead_expense,
+    COALESCE(SUM(te.amount) + SUM(le.amount), 0) AS total_expense,
     COALESCE(SUM(b.amount), 0) - (COALESCE(SUM(te.amount), 0) + COALESCE(SUM(le.amount), 0)) AS remaining_budget
 FROM 
     crm.customer c
@@ -590,6 +591,16 @@ LEFT JOIN
     crm.lead_expense le ON tl.lead_id = le.lead_id
 GROUP BY 
     c.customer_id;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE IF NOT EXISTS `crm`.`expense_threshold` (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `value` DECIMAL(2,1) DEFAULT (0.8) NOT NULL
+) ENGINE=InnoDB;
+
+INSERT INTO `crm`.`expense_threshold` (value) VALUES (0.8);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

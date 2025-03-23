@@ -22,7 +22,8 @@ public class CustomerFinancialSummary {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
+    @MapsId // Shares the customer_id as the primary key
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
@@ -38,8 +39,28 @@ public class CustomerFinancialSummary {
     @DecimalMin(value = "0", message = "Total lead expense must be greater than or equal to 0")
     private BigDecimal totalLeadExpense = BigDecimal.ZERO;
 
+    @Column(name = "total_expense", nullable = false)
+    @DecimalMin(value = "0", message = "Total expense must be greater than or equal to 0")
+    private BigDecimal totalExpense = BigDecimal.ZERO;
+
     @Column(name = "remaining_budget", nullable = false)
     private BigDecimal remainingBudget = BigDecimal.ZERO;
+
+    // Methods
+    public boolean isThresholdExceeded(BigDecimal threshold) {
+        // Validate threshold is between 0 and 1
+        if (threshold == null || 
+            threshold.compareTo(BigDecimal.ZERO) < 0 || 
+            threshold.compareTo(BigDecimal.ONE) > 0) {
+            return false; // Invalid threshold, no exceedance
+        }
+        
+        // Calculate the threshold amount (budget * threshold)
+        BigDecimal thresholdAmount = totalBudget.multiply(threshold);
+        
+        // Check if total expenses exceed the threshold amount
+        return totalExpense.compareTo(thresholdAmount) > 0;
+    }
 
     // Custom setters to update remaining_budget
     public void setTotalBudget(BigDecimal totalBudget) {

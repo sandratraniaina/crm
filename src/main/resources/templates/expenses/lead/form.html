@@ -37,6 +37,9 @@
                                 <h4 class="card-title"
                                     th:text="${expense.id != null ? 'Edit Expense for Lead: ' + lead.name : 'Create Expense for Lead: ' + lead.name}">
                                 </h4>
+                                <div th:if="${warning == true}" class="alert alert-warning">
+                                    Warning: Customer's ticket expense threshold has been reached
+                                </div>
                                 <form th:object="${expense}" th:action="@{/leads/{id}/expenses/save(id=${lead.leadId})}"
                                     method="post">
                                     <label class="m-t-20" for="amount">Amount:</label>
