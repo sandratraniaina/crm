@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import site.easy.to.build.crm.entity.Customer;
-import site.easy.to.build.crm.entity.CustomerFinancialSummary;
 import site.easy.to.build.crm.entity.Lead;
 import site.easy.to.build.crm.entity.User;
 import site.easy.to.build.crm.entity.expense.LeadExpense;
@@ -22,7 +21,6 @@ import site.easy.to.build.crm.service.lead.LeadService;
 import site.easy.to.build.crm.service.user.UserService;
 import site.easy.to.build.crm.util.AuthenticationUtils;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Controller
@@ -38,8 +36,8 @@ public class LeadExpenseController {
 
     @Autowired
     public LeadExpenseController(LeadExpenseService leadExpenseService, LeadService leadService,
-                                 UserService userService, AuthenticationUtils authenticationUtils,
-                                 HttpSession session, ExpenseThresholdService expenseThresholdService) {
+            UserService userService, AuthenticationUtils authenticationUtils,
+            HttpSession session, ExpenseThresholdService expenseThresholdService) {
         this.leadExpenseService = leadExpenseService;
         this.leadService = leadService;
         this.userService = userService;
@@ -58,16 +56,12 @@ public class LeadExpenseController {
 
     @GetMapping("/{id}/expenses/form")
     public String showExpenseForm(@PathVariable("id") Integer leadId,
-                                  @RequestParam(value = "expenseId", required = false) Integer expenseId,
-                                  Model model) {
+            @RequestParam(value = "expenseId", required = false) Integer expenseId,
+            Model model) {
         Lead lead = leadService.findByLeadId(leadId);
 
         Customer customer = lead.getCustomer();
-        CustomerFinancialSummary summary = customer.getFinancialSummary();
-        BigDecimal threshold = expenseThresholdService.getThresholdValue();
-
-        model.addAttribute("warning", summary.isThresholdExceeded(threshold));
-        System.out.println("Warning: " + summary.isThresholdExceeded(threshold));
+        model.addAttribute("warning", expenseThresholdService.isThresholdExceeded(customer));
 
         LeadExpense expense;
         if (expenseId != null) {
@@ -84,11 +78,12 @@ public class LeadExpenseController {
 
     @PostMapping("/{id}/expenses/save")
     public String saveLeadExpense(@PathVariable("id") Integer leadId,
-                                  @Valid @ModelAttribute("expense") LeadExpense expense,
-                                  BindingResult bindingResult,
-                                  Authentication authentication,
-                                  RedirectAttributes redirectAttributes,
-                                  Model model) {
+            @Valid @ModelAttribute("expense") LeadExpense expense,
+            BindingResult bindingResult,
+            Authentication authentication,
+            RedirectAttributes redirectAttributes,
+            @RequestParam(name = "confirm", required = false) Boolean confirm,
+            Model model) {
         if (bindingResult.hasErrors()) {
             Lead lead = leadService.findByLeadId(leadId);
             model.addAttribute("lead", lead);
@@ -113,6 +108,17 @@ public class LeadExpenseController {
                 expense.setCreatedAt(LocalDate.now().atStartOfDay());
             }
 
+            boolean excedeedBudget = expenseThresholdService.isBudgetExceeded(expense.getLead().getCustomer(),
+                    expense.getAmount());
+
+            if (excedeedBudget && confirm == null) {
+                // IMplement somethign
+                model.addAttribute("lead", lead);
+                model.addAttribute("expense", expense);
+                model.addAttribute("confirmationMessage", "Customer budget will be exceeded, are you sure to confirm?");
+                return "expenses/lead/form";
+            }
+
             leadExpenseService.createLeadExpense(expense); // Use create for both save and update
             redirectAttributes.addFlashAttribute("successMessage",
                     "Lead expense " + (expense.getId() == null ? "created" : "updated") + " successfully");
@@ -128,8 +134,8 @@ public class LeadExpenseController {
 
     @GetMapping("/{id}/expenses/{expenseId}/delete")
     public String deleteLeadExpense(@PathVariable("id") Integer leadId,
-                                    @PathVariable("expenseId") Integer expenseId,
-                                    RedirectAttributes redirectAttributes) {
+            @PathVariable("expenseId") Integer expenseId,
+            RedirectAttributes redirectAttributes) {
         try {
             leadExpenseService.deleteLeadExpense(expenseId);
             redirectAttributes.addFlashAttribute("successMessage", "Lead expense deleted successfully");

@@ -572,25 +572,30 @@ CREATE TABLE IF NOT EXISTS `customer_financial_summary` (
 CREATE OR REPLACE VIEW `v_customer_financial_summary` AS
 SELECT 
     c.customer_id,
-    COALESCE(SUM(b.amount), 0) AS total_budget,
-    COALESCE(SUM(te.amount), 0) AS total_ticket_expense,
-    COALESCE(SUM(le.amount), 0) AS total_lead_expense,
-    COALESCE(SUM(te.amount) + SUM(le.amount), 0) AS total_expense,
-    COALESCE(SUM(b.amount), 0) - (COALESCE(SUM(te.amount), 0) + COALESCE(SUM(le.amount), 0)) AS remaining_budget
+    COALESCE(b.total_budget, 0) AS total_budget,
+    COALESCE(te.total_ticket_expense, 0) AS total_ticket_expense,
+    COALESCE(le.total_lead_expense, 0) AS total_lead_expense,
+    COALESCE(te.total_ticket_expense, 0) + COALESCE(le.total_lead_expense, 0) AS total_expense,
+    COALESCE(b.total_budget, 0) - (COALESCE(te.total_ticket_expense, 0) + COALESCE(le.total_lead_expense, 0)) AS remaining_budget
 FROM 
     crm.customer c
-LEFT JOIN 
-    crm.budget b ON c.customer_id = b.customer_id
-LEFT JOIN 
-    crm.trigger_ticket tt ON c.customer_id = tt.customer_id
-LEFT JOIN 
-    crm.ticket_expense te ON tt.ticket_id = te.ticket_id
-LEFT JOIN 
-    crm.trigger_lead tl ON c.customer_id = tl.customer_id
-LEFT JOIN 
-    crm.lead_expense le ON tl.lead_id = le.lead_id
-GROUP BY 
-    c.customer_id;
+LEFT JOIN (
+    SELECT customer_id, SUM(amount) AS total_budget
+    FROM crm.budget
+    GROUP BY customer_id
+) b ON c.customer_id = b.customer_id
+LEFT JOIN (
+    SELECT tt.customer_id, SUM(te.amount) AS total_ticket_expense
+    FROM crm.trigger_ticket tt
+    LEFT JOIN crm.ticket_expense te ON tt.ticket_id = te.ticket_id
+    GROUP BY tt.customer_id
+) te ON c.customer_id = te.customer_id
+LEFT JOIN (
+    SELECT tl.customer_id, SUM(le.amount) AS total_lead_expense
+    FROM crm.trigger_lead tl
+    LEFT JOIN crm.lead_expense le ON tl.lead_id = le.lead_id
+    GROUP BY tl.customer_id
+) le ON c.customer_id = le.customer_id;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
