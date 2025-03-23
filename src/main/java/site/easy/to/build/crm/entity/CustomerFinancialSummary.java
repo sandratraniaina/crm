@@ -46,6 +46,22 @@ public class CustomerFinancialSummary {
     @Column(name = "remaining_budget", nullable = false)
     private BigDecimal remainingBudget = BigDecimal.ZERO;
 
+    // Methods
+    public boolean isThresholdExceeded(BigDecimal threshold) {
+        // Validate threshold is between 0 and 1
+        if (threshold == null || 
+            threshold.compareTo(BigDecimal.ZERO) < 0 || 
+            threshold.compareTo(BigDecimal.ONE) > 0) {
+            return false; // Invalid threshold, no exceedance
+        }
+        
+        // Calculate the threshold amount (budget * threshold)
+        BigDecimal thresholdAmount = totalBudget.multiply(threshold);
+        
+        // Check if total expenses exceed the threshold amount
+        return totalExpense.compareTo(thresholdAmount) > 0;
+    }
+
     // Custom setters to update remaining_budget
     public void setTotalBudget(BigDecimal totalBudget) {
         this.totalBudget = totalBudget;
