@@ -569,7 +569,7 @@ CREATE TABLE IF NOT EXISTS `customer_financial_summary` (
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE VIEW `v_customer_financial_summary` AS
+CREATE OR REPLACE VIEW `v_customer_financial_summary` AS
 SELECT 
     c.customer_id,
     COALESCE(SUM(b.amount), 0) AS total_budget,
