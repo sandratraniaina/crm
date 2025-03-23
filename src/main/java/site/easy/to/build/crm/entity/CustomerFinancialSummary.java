@@ -49,7 +49,7 @@ public class CustomerFinancialSummary {
     // Methods
     public boolean isBudgetExceeded(BigDecimal newAmount) {
         BigDecimal totalExpenses = totalExpense.add(newAmount);
-        return totalExpenses.compareTo(totalExpense) > 0;
+        return totalExpenses.compareTo(totalBudget) > 0;
     }
 
     public boolean isThresholdExceeded(BigDecimal threshold) {
