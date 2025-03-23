@@ -39,6 +39,10 @@ public class CustomerFinancialSummary {
     @DecimalMin(value = "0", message = "Total lead expense must be greater than or equal to 0")
     private BigDecimal totalLeadExpense = BigDecimal.ZERO;
 
+    @Column(name = "total_expense", nullable = false)
+    @DecimalMin(value = "0", message = "Total expense must be greater than or equal to 0")
+    private BigDecimal totalExpense = BigDecimal.ZERO;
+
     @Column(name = "remaining_budget", nullable = false)
     private BigDecimal remainingBudget = BigDecimal.ZERO;
 
