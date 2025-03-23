@@ -2,6 +2,7 @@ package site.easy.to.build.crm.service.expense;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import site.easy.to.build.crm.entity.expense.LeadExpense;
 import site.easy.to.build.crm.repository.expense.LeadExpenseRepository;
 
@@ -24,8 +25,9 @@ public class LeadExpenseServiceImpl implements LeadExpenseService {
     }
 
     @Override
-    public Optional<LeadExpense> findById(Integer id) {
-        return leadExpenseRepository.findById(id);
+    public LeadExpense findById(Integer id) {
+        Optional<LeadExpense> optionalLeadExpense = leadExpenseRepository.findById(id);
+        return optionalLeadExpense.orElseThrow(() -> new RuntimeException("Lead expense not found:" + id));
     }
 
     @Override
