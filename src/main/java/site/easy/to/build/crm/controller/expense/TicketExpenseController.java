@@ -38,8 +38,8 @@ public class TicketExpenseController {
 
     @Autowired
     public TicketExpenseController(TicketExpenseService ticketExpenseService, TicketService ticketService,
-                                   UserService userService, AuthenticationUtils authenticationUtils,
-                                   HttpSession session, ExpenseThresholdService expenseThresholdService) {
+            UserService userService, AuthenticationUtils authenticationUtils,
+            HttpSession session, ExpenseThresholdService expenseThresholdService) {
         this.ticketExpenseService = ticketExpenseService;
         this.ticketService = ticketService;
         this.userService = userService;
@@ -58,8 +58,8 @@ public class TicketExpenseController {
 
     @GetMapping("/{id}/expenses/form")
     public String showExpenseForm(@PathVariable("id") Integer ticketId,
-                                  @RequestParam(value = "expenseId", required = false) Integer expenseId,
-                                  Model model) {
+            @RequestParam(value = "expenseId", required = false) Integer expenseId,
+            Model model) {
         Ticket ticket = ticketService.findByTicketId(ticketId);
 
         Customer customer = ticket.getCustomer();
@@ -80,11 +80,12 @@ public class TicketExpenseController {
 
     @PostMapping("/{id}/expenses/save")
     public String saveTicketExpense(@PathVariable("id") Integer ticketId,
-                                    @Valid @ModelAttribute("expense") TicketExpense expense,
-                                    BindingResult bindingResult,
-                                    Authentication authentication,
-                                    RedirectAttributes redirectAttributes,
-                                    Model model) {
+            @Valid @ModelAttribute("expense") TicketExpense expense,
+            BindingResult bindingResult,
+            Authentication authentication,
+            RedirectAttributes redirectAttributes,
+            @RequestParam(name = "confirm", required = false) Boolean confirm,
+            Model model) {
         if (bindingResult.hasErrors()) {
             Ticket ticket = ticketService.findByTicketId(ticketId);
             model.addAttribute("ticket", ticket);
@@ -109,6 +110,17 @@ public class TicketExpenseController {
                 expense.setCreatedAt(LocalDate.now().atStartOfDay());
             }
 
+            boolean excedeedBudget = expenseThresholdService.isBudgetExceeded(expense.getTicket().getCustomer(),
+                    expense.getAmount());
+
+            if (excedeedBudget && confirm == null) {
+                // IMplement somethign
+                model.addAttribute("ticket", ticket);
+                model.addAttribute("expense", expense);
+                model.addAttribute("confirmationMessage", "Customer budget will be exceeded, are you sure to confirm?");
+                return "expenses/ticket/form";
+            }
+
             ticketExpenseService.createTicketExpense(expense); // Use create for both save and update
             redirectAttributes.addFlashAttribute("successMessage",
                     "Ticket expense " + (expense.getId() == null ? "created" : "updated") + " successfully");
@@ -124,8 +136,8 @@ public class TicketExpenseController {
 
     @GetMapping("/{id}/expenses/{expenseId}/delete")
     public String deleteTicketExpense(@PathVariable("id") Integer ticketId,
-                                      @PathVariable("expenseId") Integer expenseId,
-                                      RedirectAttributes redirectAttributes) {
+            @PathVariable("expenseId") Integer expenseId,
+            RedirectAttributes redirectAttributes) {
         try {
             ticketExpenseService.deleteTicketExpense(expenseId);
             redirectAttributes.addFlashAttribute("successMessage", "Ticket expense deleted successfully");

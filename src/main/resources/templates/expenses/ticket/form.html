@@ -40,6 +40,9 @@
                                 <div th:if="${warning == true}" class="alert alert-warning">
                                     Warning: Customer's ticket expense threshold has been reached
                                 </div>
+                                <div th:if="${confirmationMessage != null}" class="alert alert-warning" th:text="${confirmationMessage}">
+
+                                </div>
                                 <form th:object="${expense}"
                                     th:action="@{/tickets/{id}/expenses/save(id=${ticket.ticketId})}" method="post">
                                     <label class="m-t-20" for="amount">Amount:</label>
@@ -71,8 +74,13 @@
                                     <input type="hidden" th:field="*{id}" />
                                     <input type="hidden" th:field="*{ticket}" th:value="${ticket.ticketId}" />
 
-                                    <button type="submit" class="btn btn-primary m-t-20"
+                                    <button th:if="${confirmationMessage == null}" type="submit" class="btn btn-primary m-t-20"
                                         th:text="${expense.id != null ? 'Update Expense' : 'Create Expense'}"></button>
+                                    <div th:if="${confirmationMessage != null}" >
+                                        <input type="hidden" name="confirm" value="true">
+                                        <button type="submit" class="btn btn-danger m-t-20">Confrirm</button>
+                                        <a th:href="${home + 'tickets/' + ticket.ticketId + '/expenses'}" class="btn btn-neutral m-t-20" >Cancel</a>
+                                    </div>
                                 </form>
                             </div>
                         </div>
