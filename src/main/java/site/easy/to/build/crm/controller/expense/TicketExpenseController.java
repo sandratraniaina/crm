@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import site.easy.to.build.crm.entity.Customer;
-import site.easy.to.build.crm.entity.CustomerFinancialSummary;
 import site.easy.to.build.crm.entity.Ticket;
 import site.easy.to.build.crm.entity.User;
 import site.easy.to.build.crm.entity.expense.TicketExpense;
@@ -22,7 +21,6 @@ import site.easy.to.build.crm.service.ticket.TicketService;
 import site.easy.to.build.crm.service.user.UserService;
 import site.easy.to.build.crm.util.AuthenticationUtils;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Controller
