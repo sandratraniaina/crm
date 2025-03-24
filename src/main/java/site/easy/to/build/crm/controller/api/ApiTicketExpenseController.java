@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
+import site.easy.to.build.crm.entity.Ticket;
 import site.easy.to.build.crm.entity.expense.TicketExpense;
 import site.easy.to.build.crm.service.expense.TicketExpenseService;
 import site.easy.to.build.crm.service.ticket.TicketService;
@@ -24,6 +25,11 @@ public class ApiTicketExpenseController {
 
     private final TicketExpenseService ticketExpenseService;
     private final TicketService ticketService;
+
+    @GetMapping
+    public ResponseEntity<Response<List<Ticket>>> getTickets() {
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket fetchet successfully", ticketService.findAll());
+    }
 
     @GetMapping("/expenses")
     public ResponseEntity<Response<List<TicketExpense>>> getTicketExpenses() {
