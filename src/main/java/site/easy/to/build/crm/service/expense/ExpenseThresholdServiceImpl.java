@@ -13,19 +13,19 @@ import java.math.BigDecimal;
 
 @Service
 public class ExpenseThresholdServiceImpl implements ExpenseThresholdService {
-    
+
     private final ExpenseThresholdRepository thresholdRepository;
-    
+
     @Autowired
     public ExpenseThresholdServiceImpl(ExpenseThresholdRepository thresholdRepository) {
         this.thresholdRepository = thresholdRepository;
     }
-    
+
     @Override
     public BigDecimal getThresholdValue() {
         return thresholdRepository.getThreshold().getValue();
     }
-    
+
     @Override
     @Transactional
     public ExpenseThreshold updateThreshold(BigDecimal newValue) {
@@ -33,7 +33,7 @@ public class ExpenseThresholdServiceImpl implements ExpenseThresholdService {
         threshold.setValue(newValue);
         return thresholdRepository.save(threshold);
     }
-    
+
     @Override
     @Transactional
     public void initializeThresholdIfNotExists() {
@@ -54,5 +54,10 @@ public class ExpenseThresholdServiceImpl implements ExpenseThresholdService {
     public boolean isBudgetExceeded(Customer customer, BigDecimal newValue) {
         CustomerFinancialSummary summary = customer.getFinancialSummary();
         return summary.isBudgetExceeded(newValue);
+    }
+
+    @Override
+    public ExpenseThreshold getThreshold() {
+        return thresholdRepository.getThreshold();
     }
 }
