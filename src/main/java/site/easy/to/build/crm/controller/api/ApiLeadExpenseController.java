@@ -31,6 +31,11 @@ public class ApiLeadExpenseController {
         return ResponseUtil.sendResponse(HttpStatus.OK, true, "Lead expenses fetch successfully", leadExpenseService.findAll());
     }
 
+        @GetMapping
+    public ResponseEntity<Response<List<Lead>>> getTickets() {
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket fetchet successfully", leadService.findAll());
+    }
+
     // GET /api/leads/{leadId}/expenses
     @GetMapping("/{leadId}/expenses")
     public ResponseEntity<Response<Map<String, Object>>> getLeadExpenses(@PathVariable("leadId") Integer leadId) {
