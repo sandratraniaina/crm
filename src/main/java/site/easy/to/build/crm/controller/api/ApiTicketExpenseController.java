@@ -31,6 +31,19 @@ public class ApiTicketExpenseController {
         return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket fetchet successfully", ticketService.findAll());
     }
 
+    
+    @DeleteMapping("/{ticketId}/delete")
+    public ResponseEntity<Response<Map<String, Boolean>>> deleteLead(
+            @PathVariable("ticketId") Integer ticketId) {
+        Ticket lead = ticketService.findByTicketId(ticketId);
+        if (lead == null || lead.getTicketId() != ticketId) {
+            return ResponseUtil.sendResponse(HttpStatus.NOT_FOUND, false, "Ticket not found", null);
+        }
+        ticketService.delete(lead);
+
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Lead deleted successfully", null);
+    }
+
     @GetMapping("/expenses")
     public ResponseEntity<Response<List<TicketExpense>>> getTicketExpenses() {
         return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket expenses retrieved successfully",
