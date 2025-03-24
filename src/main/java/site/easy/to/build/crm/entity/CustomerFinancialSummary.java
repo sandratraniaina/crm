@@ -10,8 +10,6 @@ import java.math.BigDecimal;
 
 import org.springframework.data.annotation.Immutable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 @Table(name = "v_customer_financial_summary")
 @Immutable
@@ -27,7 +25,6 @@ public class CustomerFinancialSummary {
     @OneToOne
     @MapsId // Shares the customer_id as the primary key
     @JoinColumn(name = "customer_id", nullable = false)
-    @JsonIgnore
     private Customer customer;
 
     @Column(name = "total_budget", nullable = false)

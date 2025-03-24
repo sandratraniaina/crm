@@ -7,8 +7,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.groups.Default;
 import site.easy.to.build.crm.customValidations.customer.UniqueEmail;
-import site.easy.to.build.crm.entity.expense.LeadExpense;
-import site.easy.to.build.crm.entity.expense.TicketExpense;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -69,6 +67,7 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnoreProperties("customer")
+    @JsonIgnore
     private User user;
 
     @OneToOne
@@ -80,15 +79,19 @@ public class Customer {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<Budget> budgets;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<Lead> leads;
 
     @OneToMany(mappedBy = "customer")
+    @JsonIgnore
     private List<Ticket> tickets;
 
     @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private CustomerFinancialSummary financialSummary;
 
     public double getTotalBudget() {

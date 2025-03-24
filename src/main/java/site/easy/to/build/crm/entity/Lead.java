@@ -68,6 +68,7 @@ public class Lead {
 
     @OneToMany
     @JoinColumn(name = "lead_id")
+    @JsonIgnore
     private List<LeadExpense> leadExpenses;
 
     @Column(name = "created_at")

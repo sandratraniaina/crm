@@ -45,6 +45,5 @@ public class TicketExpense {
 
     @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
-    @JsonIgnore
     private Ticket ticket;
 }

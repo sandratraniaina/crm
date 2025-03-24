@@ -54,6 +54,7 @@ public class Ticket {
 
     @OneToMany
     @JoinColumn(name = "ticket_id")
+    @JsonIgnore
     private List<TicketExpense> ticketExpenses;
 
     @Column(name = "created_at")

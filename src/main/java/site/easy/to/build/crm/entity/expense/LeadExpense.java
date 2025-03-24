@@ -46,6 +46,5 @@ public class LeadExpense {
 
     @ManyToOne
     @JoinColumn(name = "lead_id", nullable = false)
-    @JsonIgnore
     private Lead lead;
 }
