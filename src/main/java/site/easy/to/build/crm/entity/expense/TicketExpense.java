@@ -5,13 +5,14 @@ import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import site.easy.to.build.crm.entity.Customer;
 import site.easy.to.build.crm.entity.Ticket;
 import site.easy.to.build.crm.entity.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "ticket_expense")
@@ -39,9 +40,11 @@ public class TicketExpense {
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
+    @JsonIgnore
     private User createdBy;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
+    @JsonIgnore
     private Ticket ticket;
 }
