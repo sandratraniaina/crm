@@ -28,10 +28,11 @@ public class ApiLeadExpenseController {
 
     @GetMapping("/expenses")
     public ResponseEntity<Response<List<LeadExpense>>> getLeadExpenses() {
-        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Lead expenses fetch successfully", leadExpenseService.findAll());
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Lead expenses fetch successfully",
+                leadExpenseService.findAll());
     }
 
-        @GetMapping
+    @GetMapping
     public ResponseEntity<Response<List<Lead>>> getTickets() {
         return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket fetchet successfully", leadService.findAll());
     }
@@ -61,7 +62,8 @@ public class ApiLeadExpenseController {
         expense.setDescription(updatedExpense.getDescription());
         expense.setExpenseDate(updatedExpense.getExpenseDate());
         leadExpenseService.createLeadExpense(expense);
-        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Lead expense updated successfully", Map.of("success", true));
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Lead expense updated successfully",
+                Map.of("success", true));
     }
 
     @DeleteMapping("/{leadId}/expenses/{expenseId}")
@@ -73,6 +75,7 @@ public class ApiLeadExpenseController {
             return ResponseUtil.sendResponse(HttpStatus.NOT_FOUND, false, "Lead expense not found", null);
         }
         leadExpenseService.deleteLeadExpense(expenseId);
-        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Lead expense deleted successfully", Map.of("success", true));
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Lead expense deleted successfully",
+                Map.of("success", true));
     }
 }

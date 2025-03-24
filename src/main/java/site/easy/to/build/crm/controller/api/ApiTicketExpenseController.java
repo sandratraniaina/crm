@@ -33,14 +33,15 @@ public class ApiTicketExpenseController {
 
     @GetMapping("/expenses")
     public ResponseEntity<Response<List<TicketExpense>>> getTicketExpenses() {
-        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket expenses retrieved successfully", ticketExpenseService.findAll());
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket expenses retrieved successfully",
+                ticketExpenseService.findAll());
     }
 
     @GetMapping("/{ticketId}/expenses")
     public ResponseEntity<Response<Map<String, Object>>> getTicketExpenses(@PathVariable("ticketId") Integer ticketId) {
         List<TicketExpense> expenses = ticketExpenseService.findByTicketId(ticketId);
         Map<String, Object> responseData = new HashMap<>();
-        
+
         responseData.put("ticket", ticketService.findByTicketId(ticketId));
         responseData.put("expenses", expenses);
         return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket expenses retrieved successfully", responseData);
@@ -59,7 +60,8 @@ public class ApiTicketExpenseController {
         expense.setDescription(updatedExpense.getDescription());
         expense.setExpenseDate(updatedExpense.getExpenseDate());
         ticketExpenseService.createTicketExpense(expense);
-        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket expense updated successfully", Map.of("success", true));
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket expense updated successfully",
+                Map.of("success", true));
     }
 
     @DeleteMapping("/{ticketId}/expenses/{expenseId}")
@@ -71,6 +73,7 @@ public class ApiTicketExpenseController {
             return ResponseUtil.sendResponse(HttpStatus.NOT_FOUND, false, "Ticket expense not found", null);
         }
         ticketExpenseService.deleteTicketExpense(expenseId);
-        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket expense deleted successfully", Map.of("success", true));
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Ticket expense deleted successfully",
+                Map.of("success", true));
     }
 }

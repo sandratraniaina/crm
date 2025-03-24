@@ -39,7 +39,8 @@ public class ApiBudgetController {
 
     // GET /api/customers/{customerId}/budget
     @GetMapping("/{customerId}/budget")
-    public ResponseEntity<Response<Map<String, Object>>> getCustomerBudgets(@PathVariable("customerId") Integer customerId) {
+    public ResponseEntity<Response<Map<String, Object>>> getCustomerBudgets(
+            @PathVariable("customerId") Integer customerId) {
         Customer customer = customerService.findByCustomerId(customerId);
         if (customer == null) {
             return ResponseUtil.sendResponse(HttpStatus.NOT_FOUND, false, "Customer not found", null);

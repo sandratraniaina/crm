@@ -30,7 +30,8 @@ public class ApiFinancialSummaryController {
 
     @GetMapping("/financial-summary")
     public ResponseEntity<Response<FinancialSummaryDTO>> getFinancialSummary() {
-        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Financial summary retrieved successfully", financialSummaryService.getFinancialSummary());
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Financial summary retrieved successfully",
+                financialSummaryService.getFinancialSummary());
     }
 
     @GetMapping("/customer-financial-summary")

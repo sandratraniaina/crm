@@ -36,12 +36,14 @@ public class ApiExpenseThresholdController {
 
     // POST /api/expense-threshold/update
     @PostMapping("/expense-threshold/update")
-    public ResponseEntity<Response<Map<String, Boolean>>> updateExpenseThreshold(@RequestBody Map<String, Double> request) {
+    public ResponseEntity<Response<Map<String, Boolean>>> updateExpenseThreshold(
+            @RequestBody Map<String, Double> request) {
         Double thresholdValue = request.get("threshold");
         if (thresholdValue == null) {
             return ResponseUtil.sendResponse(HttpStatus.BAD_REQUEST, false, "Threshold value is required", null);
         }
         expenseThresholdService.updateThreshold(BigDecimal.valueOf(thresholdValue));
-        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Expense threshold updated successfully", Map.of("success", true));
+        return ResponseUtil.sendResponse(HttpStatus.OK, true, "Expense threshold updated successfully",
+                Map.of("success", true));
     }
 }
