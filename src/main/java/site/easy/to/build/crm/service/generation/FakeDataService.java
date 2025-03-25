@@ -13,8 +13,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import site.easy.to.build.crm.entity.Customer;
 import site.easy.to.build.crm.entity.Lead;
+import site.easy.to.build.crm.entity.Ticket;
 import site.easy.to.build.crm.entity.User;
 import site.easy.to.build.crm.entity.expense.LeadExpense;
+import site.easy.to.build.crm.entity.expense.TicketExpense;
 import site.easy.to.build.crm.service.user.UserService;
 import site.easy.to.build.crm.service.customer.CustomerService;
 
@@ -42,7 +44,7 @@ public class FakeDataService {
         Customer customer = new Customer();
 
         User randomUser = userService.getRandomUser();
-        
+
         customer.setName(faker.name().fullName());
         customer.setEmail(faker.internet().emailAddress());
         customer.setCountry(faker.address().country());
@@ -97,8 +99,55 @@ public class FakeDataService {
         return leadExpense;
     }
 
+    public Ticket generateFakeTicket(Customer customer) {
+        Ticket ticket = new Ticket();
+
+        User randomManager = userService.getRandomUser();
+        User randomEmployee = userService.getRandomUser();
+
+        ticket.setSubject(faker.lorem().sentence(3));
+        ticket.setStatus(getRandomTicketStatus());
+        ticket.setPriority(getRandomTicketPriority());
+        ticket.setManager(randomManager);
+        ticket.setEmployee(randomEmployee);
+        ticket.setCustomer(customer);
+
+        ticket.setDescription(faker.lorem().paragraph());
+
+        return ticket;
+    }
+
+    public TicketExpense generateFakeTicketExpense() {
+        TicketExpense ticketExpense = new TicketExpense();
+
+        User randomUser = userService.getRandomUser();
+        Customer randomCustomer = customerService.getRandomCustomer();
+        Ticket ticket = generateFakeTicket(randomCustomer);
+
+        ticketExpense.setAmount(BigDecimal.valueOf(faker.number().randomDouble(2, 10, 1000)));
+        ticketExpense.setCreatedBy(randomUser);
+        ticketExpense.setTicket(ticket);
+
+        ticketExpense.setDescription(faker.lorem().sentence());
+        ticketExpense.setCreatedAt(LocalDateTime.now());
+        ticketExpense.setExpenseDate(LocalDate.now());
+
+        return ticketExpense;
+    }
+
     private String getRandomLeadStatus() {
-        String[] statuses = {"meeting-to-schedule", "scheduled", "archived", "success", "assign-to-sales"};
+        String[] statuses = { "meeting-to-schedule", "scheduled", "archived", "success", "assign-to-sales" };
         return statuses[random.nextInt(statuses.length)];
+    }
+
+    private String getRandomTicketStatus() {
+        String[] statuses = { "open", "assigned", "on-hold", "in-progress", "resolved", "closed", "reopened",
+                "pending-customer-response", "escalated", "archived" };
+        return statuses[random.nextInt(statuses.length)];
+    }
+
+    private String getRandomTicketPriority() {
+        String[] priorities = { "low", "medium", "high", "closed", "urgent", "critical" };
+        return priorities[random.nextInt(priorities.length)];
     }
 }
