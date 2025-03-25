@@ -3,20 +3,29 @@
     <div class="scroll-sidebar">
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
-            <ul id="sidebarnav" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'') or hasRole(''ROLE_EMPLOYEE'')')}">
+            <ul id="sidebarnav"
+                th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'') or hasRole(''ROLE_EMPLOYEE'')')}">
                 <li class="user-pro">
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                        <img th:if="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.OAuth2User)}" th:src="${#authentication.principal.picture}" alt="user-img" class="img-circle">
-                        <img th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.User)}" th:src="@{/images/pp.png}" class="img-circle">
-                        <span th:if="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.OAuth2User)}" class="hide-menu" th:text="${#authentication.principal.givenName + ' ' +  #authentication.principal.familyName}"></span>
-                        <span th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.User)}" class="hide-menu" th:text="${#authentication.principal.username}"></span>
+                        <img th:if="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.OAuth2User)}"
+                            th:src="${#authentication.principal.picture}" alt="user-img" class="img-circle">
+                        <img th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.User)}"
+                            th:src="@{/images/pp.png}" class="img-circle">
+                        <span
+                            th:if="${#authentication.principal instanceof T(org.springframework.security.oauth2.core.user.OAuth2User)}"
+                            class="hide-menu"
+                            th:text="${#authentication.principal.givenName + ' ' +  #authentication.principal.familyName}"></span>
+                        <span
+                            th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.User)}"
+                            class="hide-menu" th:text="${#authentication.principal.username}"></span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a th:href="${home + 'employee/profile'}"><i class="ti-user"></i> My Profile</a></li>
                         <li><a th:href="${home + 'employee/gmail/emails'}"><i class="ti-email"></i> Inbox</a></li>
                         <li>
                             <a th:if="${#authentication.principal instanceof T(org.springframework.security.core.userdetails.User) and !#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}"
-                               th:href="${home + 'change-password'}" class="dropdown-item"><i class="fas fa-key"></i> change password</a>
+                                th:href="${home + 'change-password'}" class="dropdown-item"><i class="fas fa-key"></i>
+                                change password</a>
                         </li>
                         <li>
                             <form th:action="@{/logout}" method="post">
@@ -78,9 +87,11 @@
                         </li>
                     </ul>
                 </li>
-                <li th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" class="nav-small-cap">--- Users</li>
+                <li th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" class="nav-small-cap">--- Users
+                </li>
                 <li>
-                    <a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" class="has-arrow waves-effect waves-dark" href="javascript:void(0)">
+                    <a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                        class="has-arrow waves-effect waves-dark" href="javascript:void(0)">
                         <i class="fas fa-users"></i>
                         <span class="hide-menu">Users</span>
                     </a>
@@ -96,7 +107,8 @@
                         <span class="hide-menu">Customers</span>
                     </a>
                     <ul class="collapse">
-                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/customer/manager/all-customers'}">All customers</a></li>
+                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                                th:href="${home + 'employee/customer/manager/all-customers'}">All customers</a></li>
                         <li><a th:href="${home + 'employee/customer/my-customers'}">My customers</a></li>
                         <li><a th:href="${home + 'employee/customer/create-customer'}">Create customer</a></li>
                     </ul>
@@ -108,9 +120,11 @@
                         <span class="hide-menu">Tickets</span>
                     </a>
                     <ul class="collapse">
-                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/ticket/manager/all-tickets'}">All tickets</a></li>
+                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                                th:href="${home + 'employee/ticket/manager/all-tickets'}">All tickets</a></li>
                         <li><a th:href="${home + 'employee/ticket/assigned-tickets'}">Assigned tickets</a></li>
-                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/ticket/created-tickets'}">Created tickets</a></li>
+                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                                th:href="${home + 'employee/ticket/created-tickets'}">Created tickets</a></li>
                         <li><a th:href="${home + 'employee/ticket/create-ticket'}">Create ticket</a></li>
                     </ul>
                 </li>
@@ -121,9 +135,11 @@
                         <span class="hide-menu">Leads</span>
                     </a>
                     <ul class="collapse">
-                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/lead/manager/all-leads'}">All Leads</a></li>
+                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                                th:href="${home + 'employee/lead/manager/all-leads'}">All Leads</a></li>
                         <li><a th:href="${home + 'employee/lead/assigned-leads'}">Assigned Leads</a></li>
-                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/lead/created-leads'}">Created Leads</a></li>
+                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                                th:href="${home + 'employee/lead/created-leads'}">Created Leads</a></li>
                         <li><a th:href="${home + 'employee/lead/create'}">Create new Lead</a></li>
                     </ul>
                 </li>
@@ -134,7 +150,8 @@
                         <span class="hide-menu">Contracts</span>
                     </a>
                     <ul class="collapse">
-                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/contract/manager/show-all'}">All contracts</a></li>
+                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                                th:href="${home + 'employee/contract/manager/show-all'}">All contracts</a></li>
                         <li><a th:href="${home + 'employee/contract/my-contracts'}">My contracts</a></li>
                         <li><a th:href="${home + 'employee/contract/create'}">Create new contract</a></li>
                     </ul>
@@ -146,17 +163,29 @@
                         <span class="hide-menu">Templates</span>
                     </a>
                     <ul class="collapse">
-                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}" th:href="${home + 'employee/email-template/manager/show-all'}">All Templates</a></li>
+                        <li><a th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}"
+                                th:href="${home + 'employee/email-template/manager/show-all'}">All Templates</a></li>
                         <li><a th:href="${home + 'employee/email-template/my-templates'}">My Templates</a></li>
                         <li><a th:href="${home + 'employee/email-template/create'}">Create Template</a></li>
                     </ul>
                 </li>
                 <!-- New Section for Database Reset -->
-                <li class="nav-small-cap" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">--- System Operations</li>
+                <li class="nav-small-cap" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">--- System
+                    Operations</li>
                 <li th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
                     <a class="waves-effect waves-dark" th:href="${home + 'employee/reset/database'}">
                         <i class="fas fa-trash-restore"></i>
                         <span class="hide-menu">Reset Database</span>
+                    </a>
+                </li>
+
+                <!-- New Section for CSV Import -->
+                <li class="nav-small-cap" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">--- CSV
+                    Import</li>
+                <li th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
+                    <a class="waves-effect waves-dark" th:href="${home + 'csv-import'}">
+                        <i class="fas fa-upload"></i>
+                        <span class="hide-menu">CSV Import</span>
                     </a>
                 </li>
             </ul>
@@ -164,7 +193,8 @@
                 <li class="user-pro">
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <img th:src="@{/images/pp.png}" class="img-circle">
-                        <span class="hide-menu" th:text="${#strings.substringBefore(#authentication.principal.username, '@')}"></span>
+                        <span class="hide-menu"
+                            th:text="${#strings.substringBefore(#authentication.principal.username, '@')}"></span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a th:href="${home + 'customer/profile'}"><i class="ti-user"></i> My Profile</a></li>
