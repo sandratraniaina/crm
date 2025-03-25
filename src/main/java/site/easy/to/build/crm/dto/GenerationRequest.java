@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class GenerationRequest {
+public class GenerationRequest {
     private int customerCount;
     private int budgetCount;
     private int ticketExpenseCount;
