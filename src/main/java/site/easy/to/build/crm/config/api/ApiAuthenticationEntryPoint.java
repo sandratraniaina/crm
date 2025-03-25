@@ -15,7 +15,7 @@ public class ApiAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          AuthenticationException authException) throws IOException {
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.getWriter().write("{\"error\": \"Unauthorized - Invalid credentials or token\"}");
-        response.getWriter().flush(); // Ensure the response is fully written
+        response.getWriter().write("{\"message\": \"Unauthorized - Invalid credentials or token\", \"status\": 403, \"success\": false, \"data\": null}");
+        response.getWriter().flush();
     }
 }
