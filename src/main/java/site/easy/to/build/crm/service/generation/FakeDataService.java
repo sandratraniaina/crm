@@ -11,6 +11,7 @@ import com.github.javafaker.Faker;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import site.easy.to.build.crm.entity.Budget;
 import site.easy.to.build.crm.entity.Customer;
 import site.easy.to.build.crm.entity.Lead;
 import site.easy.to.build.crm.entity.Ticket;
@@ -133,6 +134,22 @@ public class FakeDataService {
         ticketExpense.setExpenseDate(LocalDate.now());
 
         return ticketExpense;
+    }
+
+    public Budget generateFakeBudget() {
+        Budget budget = new Budget();
+
+        User randomUser = userService.getRandomUser();
+        Customer randomCustomer = customerService.getRandomCustomer();
+
+        budget.setAmount(BigDecimal.valueOf(faker.number().randomDouble(2, 100, 10000)));
+        budget.setCreatedBy(randomUser);
+        budget.setCustomer(randomCustomer);
+
+        budget.setDescription(faker.lorem().sentence());
+        budget.setCreatedAt(LocalDate.now());
+
+        return budget;
     }
 
     private String getRandomLeadStatus() {
