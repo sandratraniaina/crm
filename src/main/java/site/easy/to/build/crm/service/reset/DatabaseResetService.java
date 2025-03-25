@@ -19,6 +19,7 @@ public class DatabaseResetService {
     public void resetDatabaseExceptAuth() {
         // List of tables to clear (excluding auth-related tables)
         String[] tablesToClear = {
+            "ticket_expense", "lead_expense", "expense_threshold", "customer_financial_summary", "budget",
             "contract_settings", "customer", "email_template", "employee", "file",
             "google_drive_file", "lead_action", "lead_settings", "ticket_settings",
             "trigger_contract", "trigger_lead", "trigger_ticket", "user_profile"
