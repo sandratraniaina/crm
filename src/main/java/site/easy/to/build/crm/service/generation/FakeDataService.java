@@ -20,6 +20,8 @@ import site.easy.to.build.crm.entity.expense.LeadExpense;
 import site.easy.to.build.crm.entity.expense.TicketExpense;
 import site.easy.to.build.crm.service.user.UserService;
 import site.easy.to.build.crm.service.customer.CustomerService;
+import site.easy.to.build.crm.service.lead.LeadService;
+import site.easy.to.build.crm.service.ticket.TicketService;
 
 @Service
 @Data
@@ -28,6 +30,8 @@ public class FakeDataService {
     private final Faker faker;
     private final UserService userService;
     private final CustomerService customerService;
+    private final LeadService leadService;
+    private final TicketService ticketService;
 
     private final Random random = new Random();
 
@@ -87,7 +91,7 @@ public class FakeDataService {
 
         User randomUser = userService.getRandomUser();
         Customer randomCustomer = customerService.getRandomCustomer();
-        Lead lead = generateFakeLead(randomCustomer);
+        Lead lead = leadService.save(generateFakeLead(randomCustomer));
 
         leadExpense.setAmount(BigDecimal.valueOf(faker.number().randomDouble(2, 10, 1000)));
         leadExpense.setCreatedBy(randomUser);
@@ -123,7 +127,7 @@ public class FakeDataService {
 
         User randomUser = userService.getRandomUser();
         Customer randomCustomer = customerService.getRandomCustomer();
-        Ticket ticket = generateFakeTicket(randomCustomer);
+        Ticket ticket = ticketService.save(generateFakeTicket(randomCustomer));
 
         ticketExpense.setAmount(BigDecimal.valueOf(faker.number().randomDouble(2, 10, 1000)));
         ticketExpense.setCreatedBy(randomUser);
