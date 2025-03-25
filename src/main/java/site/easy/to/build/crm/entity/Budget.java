@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "budget")
 @NoArgsConstructor
@@ -35,5 +37,6 @@ public class Budget {
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
+    @JsonIgnore
     private User createdBy;
 }

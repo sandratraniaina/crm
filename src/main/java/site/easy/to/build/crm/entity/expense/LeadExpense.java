@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "lead_expense")
 @NoArgsConstructor
@@ -39,6 +41,7 @@ public class LeadExpense {
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)
+    @JsonIgnore
     private User createdBy;
 
     @ManyToOne

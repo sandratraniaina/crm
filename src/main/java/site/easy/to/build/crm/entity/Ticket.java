@@ -9,6 +9,8 @@ import site.easy.to.build.crm.entity.expense.TicketExpense;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "trigger_ticket")
 public class Ticket {
@@ -37,18 +39,22 @@ public class Ticket {
 
     @ManyToOne
     @JoinColumn(name = "manager_id")
+    @JsonIgnore
     private User manager;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
+    @JsonIgnore
     private User employee;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customer;
 
     @OneToMany
     @JoinColumn(name = "ticket_id")
+    @JsonIgnore
     private List<TicketExpense> ticketExpenses;
 
     @Column(name = "created_at")

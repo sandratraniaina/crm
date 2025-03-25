@@ -8,6 +8,8 @@ import site.easy.to.build.crm.entity.expense.LeadExpense;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "trigger_lead")
 public class Lead {
@@ -38,28 +40,35 @@ public class Lead {
     private String googleDriveFolderId;
 
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<LeadAction> leadActions;
 
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<File> files;
 
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<GoogleDriveFile> googleDriveFiles;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User manager;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
+    @JsonIgnore
     private User employee;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customer;
 
     @OneToMany
     @JoinColumn(name = "lead_id")
+    @JsonIgnore
     private List<LeadExpense> leadExpenses;
 
     @Column(name = "created_at")

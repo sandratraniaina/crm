@@ -7,6 +7,8 @@ import site.easy.to.build.crm.entity.expense.ExpenseThreshold;
 
 public interface ExpenseThresholdService {
     BigDecimal getThresholdValue();
+
+    ExpenseThreshold getThreshold();
     
     ExpenseThreshold updateThreshold(BigDecimal newValue);
     

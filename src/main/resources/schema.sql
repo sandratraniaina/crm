@@ -608,6 +608,12 @@ CREATE TABLE IF NOT EXISTS `crm`.`expense_threshold` (
 INSERT INTO `crm`.`expense_threshold` (value) VALUES (0.8);
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+CREATE OR REPLACE VIEW `crm`.`v_financial_summary` AS
+  SELECT 
+    COALESCE((SELECT SUM(amount) FROM budget), 0) AS total_budget,
+    COALESCE((SELECT SUM(amount) FROM ticket_expense WHERE ticket_id IS NOT NULL), 0) AS ticket_expenses,
+    COALESCE((SELECT SUM(amount) FROM lead_expense WHERE lead_id IS NOT NULL), 0) AS lead_expenses;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
