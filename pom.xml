@@ -171,6 +171,13 @@
 			<artifactId>commons-csv</artifactId>
 			<version>1.14.0</version>
 		</dependency>
+
+		<!-- JavaFaker -->
+		<dependency>
+			<groupId>com.github.javafaker</groupId>
+			<artifactId>javafaker</artifactId>
+			<version>1.0.2</version>			<!-- Check for the latest version -->
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
