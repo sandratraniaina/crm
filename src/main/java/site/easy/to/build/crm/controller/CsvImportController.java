@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
+import site.easy.to.build.crm.entity.User;
 import site.easy.to.build.crm.exception.InvalidCsvFormatException;
 import site.easy.to.build.crm.service.budget.BudgetService;
 import site.easy.to.build.crm.service.csv.BudgetCsvImportService;
@@ -28,6 +30,7 @@ import site.easy.to.build.crm.service.expense.TicketExpenseService;
 import site.easy.to.build.crm.service.lead.LeadServiceImpl;
 import site.easy.to.build.crm.service.ticket.TicketServiceImpl;
 import site.easy.to.build.crm.service.user.UserServiceImpl;
+import site.easy.to.build.crm.util.AuthenticationUtils;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,6 +44,7 @@ public class CsvImportController {
     private final BudgetService customerBudgetService;
     private final LeadExpenseService leadExpenseService;
     private final TicketExpenseService ticketExpenseService;
+    private final AuthenticationUtils authenticationUtils;
 
     @GetMapping("/csv-import")
     public String displayCsvImportForm() {
@@ -52,7 +56,15 @@ public class CsvImportController {
             @RequestParam("customerCsvFile") MultipartFile customerCsv,
             @RequestParam("budgetCsvFile") MultipartFile budgetCsv,
             @RequestParam("expenseCsvFile") MultipartFile expenseCsv,
-            RedirectAttributes redirectAttributes) {
+            RedirectAttributes redirectAttributes,
+            Authentication authentication) {
+
+        int loggedInUserId = authenticationUtils.getLoggedInUserId(authentication);
+        if (loggedInUserId == -1) {
+            throw new IllegalStateException("No logged-in user found");
+        }
+
+        User createdBy = userService.findById(loggedInUserId);
 
         return transactionTemplate.execute(status -> {
             boolean hasError = false;
@@ -120,7 +132,7 @@ public class CsvImportController {
                         hasError = true;
                         exceptions.addAll(expenseCsvImportService.getExceptions());
                     } else {
-                        expenseCsvImportService.save();
+                        expenseCsvImportService.save(createdBy);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

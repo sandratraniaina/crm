@@ -85,7 +85,7 @@ public class ExpenseCsvImportService {
 
     /* --------------------------- Processing methods --------------------------- */
 
-    public void save() {
+    public void save(User createdBy) {
         if (customerCsvImportService.hasError() || hasError()) {
             return;
         }
@@ -94,11 +94,13 @@ public class ExpenseCsvImportService {
         List<TicketExpense> savedTicketExpenses = new ArrayList<>();
 
         for (LeadExpense leadExpense : leadExpenses) {
+            leadExpense.setCreatedBy(createdBy);
             leadExpense = leadExpenseService.createLeadExpense(leadExpense);
             savedLeadExpenses.add(leadExpense);
         }
 
         for (TicketExpense ticketExpense : ticketExpenses) {
+            ticketExpense.setCreatedBy(createdBy);
             ticketExpense = ticketExpenseService.createTicketExpense(ticketExpense);
             savedTicketExpenses.add(ticketExpense);
         }
@@ -209,8 +211,8 @@ public class ExpenseCsvImportService {
         customer.setEmail(email);
 
         if (!customerCsvImportService.hasError()) {
-            user = userService.findByUsername("hasina").get(0);
-            customer = customerService.findByEmail(email);
+            user = userService.findByUsername("aina").get(0);
+            customer = customerService.findByEmail(email);  
         }
 
         if (expense instanceof LeadExpense leadExpense) {
