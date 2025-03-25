@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.github.javafaker.Faker;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import site.easy.to.build.crm.entity.Budget;
 import site.easy.to.build.crm.entity.Customer;
@@ -25,15 +24,23 @@ import site.easy.to.build.crm.service.ticket.TicketService;
 
 @Service
 @Data
-@AllArgsConstructor
 public class FakeDataService {
     private final Faker faker;
     private final UserService userService;
     private final CustomerService customerService;
     private final LeadService leadService;
     private final TicketService ticketService;
+    private final Random random;
 
-    private final Random random = new Random();
+    public FakeDataService(UserService userService, CustomerService customerService,
+            LeadService leadService, TicketService ticketService) {
+        this.faker = new Faker();
+        this.userService = userService;
+        this.customerService = customerService;
+        this.leadService = leadService;
+        this.ticketService = ticketService;
+        this.random = new Random();
+    }
 
     public User generateUser() {
         User user = new User();
