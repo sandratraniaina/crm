@@ -18,6 +18,6 @@ public class ExpenseThreshold {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(name = "value", nullable = false, precision = 2, scale = 1)
+    @Column(name = "value", nullable = false, precision = 3, scale = 2)
     private BigDecimal value = BigDecimal.valueOf(0.8);
 }
