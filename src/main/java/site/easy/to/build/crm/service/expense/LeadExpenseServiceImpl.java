@@ -58,6 +58,6 @@ public class LeadExpenseServiceImpl implements LeadExpenseService {
 
     @Override
     public List<LeadExpense> findByCustomerId(Integer customerId) {
-        return leadExpenseRepository.findAllLeadExpensesByCustomerId(customerId);
+        return leadExpenseRepository.findAllLeadExpenseByCustomerId(customerId);
     }
 }

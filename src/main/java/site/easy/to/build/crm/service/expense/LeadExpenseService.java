@@ -13,7 +13,7 @@ public interface LeadExpenseService {
     List<LeadExpense> findAll();
     List<LeadExpense> findByLeadId(Integer leadId);
     
-    List<LeadExpense> findByCustomerId(Integer leadId);
+    List<LeadExpense> findByCustomerId(Integer customerId);
 
     // Update
     LeadExpense updateLeadExpense(LeadExpense leadExpense);
