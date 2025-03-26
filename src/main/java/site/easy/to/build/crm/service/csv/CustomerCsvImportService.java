@@ -2,7 +2,10 @@ package site.easy.to.build.crm.service.csv;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,6 +73,10 @@ public class CustomerCsvImportService {
             }
             lineNumber++;
         }
+
+        if (hasDuplicateEmails()) {
+            this.exceptions.add(new InvalidCsvFormatException(filename, 0, "Duplicate emails found in the CSV file"));
+        }
     }
 
     /* --------------------------- Validation methods --------------------------- */
@@ -81,6 +88,24 @@ public class CustomerCsvImportService {
     public boolean emailExists(String email) {
         return email != null && !email.isEmpty() &&
                 customers.stream().anyMatch(c -> c.getEmail().equalsIgnoreCase(email));
+    }
+
+    public boolean hasDuplicateEmails() {
+        if (customers == null || customers.isEmpty()) {
+            return false;
+        }
+
+        Set<String> seenEmails = new HashSet<>();
+        for (Customer customer : customers) {
+            if (customer != null && customer.getEmail() != null) {
+                if (seenEmails.contains(customer.getEmail())) {
+                    return true;
+                } else {
+                    seenEmails.add(customer.getEmail());
+                }
+            }
+        }
+        return false;
     }
 
     /* ----------------------------- Parsing methods ---------------------------- */
