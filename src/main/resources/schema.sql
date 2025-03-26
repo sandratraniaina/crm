@@ -602,7 +602,7 @@ LEFT JOIN (
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE IF NOT EXISTS `crm`.`expense_threshold` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `value` DECIMAL(2,1) DEFAULT (0.8) NOT NULL
+    `value` DECIMAL(3,2) DEFAULT (0.8) NOT NULL
 ) ENGINE=InnoDB;
 
 INSERT INTO `crm`.`expense_threshold` (value) VALUES (0.8);

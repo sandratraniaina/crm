@@ -39,9 +39,11 @@ public class ApiExpenseThresholdController {
     public ResponseEntity<Response<Map<String, Boolean>>> updateExpenseThreshold(
             @RequestBody Map<String, Double> request) {
         Double thresholdValue = request.get("threshold");
-        if (thresholdValue == null) {
-            return ResponseUtil.sendResponse(HttpStatus.BAD_REQUEST, false, "Threshold value is required", null);
+                
+        if (thresholdValue == null || thresholdValue > 1 || thresholdValue < 0) {
+            return ResponseUtil.sendResponse(HttpStatus.BAD_REQUEST, false, "Invalid threshold value.", null);
         }
+        
         expenseThresholdService.updateThreshold(BigDecimal.valueOf(thresholdValue));
         return ResponseUtil.sendResponse(HttpStatus.OK, true, "Expense threshold updated successfully",
                 Map.of("success", true));
