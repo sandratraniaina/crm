@@ -44,25 +44,28 @@ public class CustomerExportService {
         List<LeadExpense> leadExpenses = leadExpenseService.findByCustomerId(customerId);
         List<TicketExpense> ticketExpenses = ticketExpenseService.findByCustomerId(customerId);
 
-        String data = getCustomerHeader();
-        data += customerToCsvData(customer);
-        data += getBudgetHeader();
+        StringBuilder data = new StringBuilder();
+        data.append(getCustomerHeader());
+        data.append(customerToCsvData(customer));
+        data.append("\n");
 
+        data.append(getBudgetHeader());
         for (Budget budget : budgets) {
-            data += budgetToCsvData(budget);
-            data += "\n";
+            data.append(budgetToCsvData(budget));
         }
 
-        data += getLeadExpenseHeader();
+        data.append("\n");
 
+        data.append(getLeadExpenseHeader());
         for (TicketExpense ticketExpense : ticketExpenses) {
-            data += ticketExpenseToCsvData(ticketExpense);
-        }
-        for (LeadExpense leadExpense : leadExpenses) {
-            data += leadExpenseToCsvData(leadExpense);
+            data.append(ticketExpenseToCsvData(ticketExpense));
         }
 
-        return data;
+        for (LeadExpense leadExpense : leadExpenses) {
+            data.append(leadExpenseToCsvData(leadExpense));
+        }
+
+        return data.toString();
     }
 
     public String customerToCsvData(Customer customer) {
