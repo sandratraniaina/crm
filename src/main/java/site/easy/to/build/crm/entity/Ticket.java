@@ -52,8 +52,7 @@ public class Ticket {
     @JsonIgnore
     private Customer customer;
 
-    @OneToMany
-    @JoinColumn(name = "ticket_id")
+    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<TicketExpense> ticketExpenses;
 

@@ -66,8 +66,7 @@ public class Lead {
     @JsonIgnore
     private Customer customer;
 
-    @OneToMany
-    @JoinColumn(name = "lead_id")
+    @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<LeadExpense> leadExpenses;
 
