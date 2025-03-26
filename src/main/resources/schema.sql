@@ -518,7 +518,7 @@ CREATE TABLE IF NOT EXISTS `lead_expense` (
   KEY `fk_ticket_expense_users_0` (`created_by`),
   KEY `fk_lead_expense_trigger_lead` (`lead_id`),
   CONSTRAINT `fk_ticket_expense_users_0` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_lead_expense_trigger_lead` FOREIGN KEY (`lead_id`) REFERENCES `trigger_lead` (`lead_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_lead_expense_trigger_lead` FOREIGN KEY (`lead_id`) REFERENCES `trigger_lead` (`lead_id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -540,7 +540,7 @@ CREATE TABLE IF NOT EXISTS `ticket_expense` (
   KEY `fk_ticket_expense_users` (`created_by`),
   KEY `fk_ticket_expense_trigger_ticket` (`ticket_id`),
   CONSTRAINT `fk_ticket_expense_users` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ticket_expense_trigger_ticket` FOREIGN KEY (`ticket_id`) REFERENCES `trigger_ticket` (`ticket_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_ticket_expense_trigger_ticket` FOREIGN KEY (`ticket_id`) REFERENCES `trigger_ticket` (`ticket_id`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

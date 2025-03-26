@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:insert="~{/general/head.html}"></div>
+    <meta name="_csrf" content="${_csrf.token}" />
+    <meta name="_csrf_header" content="${_csrf.headerName}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap-wysihtml5.css}" />
+    <link th:href="@{/css/style.min.css}" rel="stylesheet">
+    <link th:href="@{/css/pages/inbox.css}" rel="stylesheet">
+    <link th:href="@{/css/ribbon-page.css}" rel="stylesheet">
+</head>
+
+<body class="skin-blue fixed-layout">
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">CRM</p>
+        </div>
+    </div>
+
+    <div id="main-wrapper">
+        <div th:insert="~{/general/header.html}"></div>
+        <div th:insert="~{/general/left-sidebar.html}"></div>
+
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div th:insert="~{/general/page-titles.html}"></div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+                        <div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Generate Data</h4>
+                                <form th:object="${generationRequest}" th:action="@{/data-generation}" method="post">
+                                    <div class="form-group">
+                                        <label class="m-t-20" for="customerCount">Number of Customers:</label>
+                                        <input type="number" id="customerCount" th:field="*{customerCount}"
+                                            class="form-control" min="0" value="0" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="m-t-20" for="budgetCount">Number of Budgets:</label>
+                                        <input type="number" id="budgetCount" th:field="*{budgetCount}"
+                                            class="form-control" min="0" value="0" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="m-t-20" for="ticketExpenseCount">Number of Ticket
+                                            Expenses:</label>
+                                        <input type="number" id="ticketExpenseCount" th:field="*{ticketExpenseCount}"
+                                            class="form-control" min="0" value="0" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="m-t-20" for="leadExpenseCount">Number of Lead Expenses:</label>
+                                        <input type="number" id="leadExpenseCount" th:field="*{leadExpenseCount}"
+                                            class="form-control" min="0" value="0" />
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary m-t-20">Generate Data</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:insert="~{/general/right-sidebar.html}"></div>
+            </div>
+        </div>
+
+        <div th:insert="~{/general/footer.html}"></div>
+    </div>
+
+    <script th:src="@{/js/library/jquery-3.2.1.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/library/popper.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/library/bootstrap.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/library/perfect-scrollbar.jquery.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/library/waves.js}" type="text/javascript"></script>
+    <script th:src="@{/js/library/sidebarmenu.js}" type="text/javascript"></script>
+    <script th:src="@{/js/library/sticky-kit.min.js}"></script>
+    <script th:src="@{/js/library/jquery.sparkline.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/library/custom.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/library/wysihtml5-0.3.0.js}"></script>
+    <script th:src="@{/js/library/bootstrap-wysihtml5.js}"></script>
+</body>
+
+</html>

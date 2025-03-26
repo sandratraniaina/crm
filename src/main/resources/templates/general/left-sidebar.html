@@ -188,6 +188,16 @@
                         <span class="hide-menu">CSV Import</span>
                     </a>
                 </li>
+
+                <!-- New Section for Data generation -->
+                <li class="nav-small-cap" th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">--- Data
+                    Generatoin</li>
+                <li th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
+                    <a class="waves-effect waves-dark" th:href="${home + 'data-generation'}">
+                        <i class="fas fa-database"></i>
+                        <span class="hide-menu">Data Generation</span>
+                    </a>
+                </li>
             </ul>
             <ul id="sidebarnav" th:if="${#authorization.expression('hasRole(''ROLE_CUSTOMER'')')}">
                 <li class="user-pro">
