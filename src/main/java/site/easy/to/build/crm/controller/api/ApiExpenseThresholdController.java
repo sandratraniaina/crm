@@ -40,8 +40,8 @@ public class ApiExpenseThresholdController {
             @RequestBody Map<String, Double> request) {
         Double thresholdValue = request.get("threshold");
                 
-        if (thresholdValue == null) {
-            return ResponseUtil.sendResponse(HttpStatus.BAD_REQUEST, false, "Threshold value is required", null);
+        if (thresholdValue == null || thresholdValue > 1 || thresholdValue < 0) {
+            return ResponseUtil.sendResponse(HttpStatus.BAD_REQUEST, false, "Invalid threshold value.", null);
         }
         
         expenseThresholdService.updateThreshold(BigDecimal.valueOf(thresholdValue));
