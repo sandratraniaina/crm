@@ -26,6 +26,9 @@ public class CustomerExportService {
     private final LeadExpenseService leadExpenseService;
     private final TicketExpenseService ticketExpenseService;
 
+    private static final String NEW_DATA_PREFIX = "\"copy";
+    private static final String DATA_SEPARATOR = "\",\"";
+
     public void getCsv(Integer customerId) {
         String data = generateCsvData(customerId);
 
@@ -69,12 +72,12 @@ public class CustomerExportService {
     }
 
     public String customerToCsvData(Customer customer) {
-        return "copy_" + customer.getEmail() + "," + "copy_" + customer.getName() + "\n";
+        return NEW_DATA_PREFIX + customer.getEmail() + "\"," + NEW_DATA_PREFIX + customer.getName() + "\"\n";
     }
 
     public String budgetToCsvData(Budget budget) {
         String email = budget.getCustomer().getEmail();
-        return email + "," + budget.getAmount() + "\n";
+        return email + ",\"" + budget.getAmount() + "\"\n";
     }
 
     public String leadExpenseToCsvData(LeadExpense leadExpense) {
@@ -83,7 +86,7 @@ public class CustomerExportService {
         String type = "lead";
         String status = leadExpense.getLead().getStatus();
         String value = leadExpense.getAmount().toString();
-        return email + "," + name + "," + type + "," + status + "," + value +"\n";
+        return NEW_DATA_PREFIX + email + DATA_SEPARATOR + name + DATA_SEPARATOR + type + DATA_SEPARATOR + status + DATA_SEPARATOR + value + "\"\n";
     }
 
     public String ticketExpenseToCsvData(TicketExpense ticketExpense) {
@@ -92,18 +95,18 @@ public class CustomerExportService {
         String type = "ticket";
         String status = ticketExpense.getTicket().getStatus();
         String value = ticketExpense.getAmount().toString();
-        return email + "," + subject + "," + type + "," + status + "," + value + "\n";
+        return NEW_DATA_PREFIX + email + DATA_SEPARATOR + subject + DATA_SEPARATOR + type + DATA_SEPARATOR + status + DATA_SEPARATOR + value + "\"\n";
     }
 
     public String getCustomerHeader() {
-        return "customer_email,customer_name\n";
+        return "\"customer_email\",\"customer_name\"\n";
     }
 
     public String getLeadExpenseHeader() {
-        return "customer_email,subject_or_name,type,status,expense\n";
+        return "\"customer_email\",\"subject_or_name\",\"type\",\"status\",\"expense\"\n";
     }
 
     public String getBudgetHeader() {
-        return "customer_email,Budget\n";
+        return "\"customer_email\",\"Budget\"\n";
     }
 }
