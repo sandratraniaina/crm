@@ -55,4 +55,9 @@ public class LeadExpenseServiceImpl implements LeadExpenseService {
         }
         leadExpenseRepository.deleteById(id);
     }
+
+    @Override
+    public List<LeadExpense> findByCustomerId(Integer customerId) {
+        return leadExpenseRepository.findAllLeadExpensesByCustomerId(customerId);
+    }
 }

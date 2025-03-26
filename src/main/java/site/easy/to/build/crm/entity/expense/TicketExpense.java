@@ -33,10 +33,10 @@ public class TicketExpense {
     private String description;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private  LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "expense_date", nullable = false)
-    private LocalDate expenseDate = LocalDate.now();
+    private  LocalDate expenseDate = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name = "created_by", nullable = false)

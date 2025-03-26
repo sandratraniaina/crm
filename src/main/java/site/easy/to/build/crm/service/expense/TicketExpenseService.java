@@ -13,6 +13,8 @@ public interface TicketExpenseService {
     List<TicketExpense> findAll();
     List<TicketExpense> findByTicketId(Integer ticketId);
 
+    List<TicketExpense> findByCustomerId(Integer customerId);
+
     // Update
     TicketExpense updateTicketExpense(TicketExpense ticketExpense);
 
