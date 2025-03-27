@@ -26,7 +26,7 @@ public class CustomerExportService {
     private final LeadExpenseService leadExpenseService;
     private final TicketExpenseService ticketExpenseService;
 
-    private static final String NEW_DATA_PREFIX = "\"copy";
+    private static final String NEW_DATA_PREFIX = "\"copy_";
     private static final String DATA_SEPARATOR = "\",\"";
 
     public void getCsv(Integer customerId) {
