@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:insert="~{/general/head.html}"></div>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <link th:href="@{/css/style.min.css}" rel="stylesheet">
+    <title th:text="${pageTitle}">Reset Database</title>
+</head>
+
+<body class="skin-blue fixed-layout">
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">CRM</p>
+        </div>
+    </div>
+    <div id="main-wrapper">
+        <div th:insert="~{/general/header.html}"></div>
+        <div th:insert="~{/general/left-sidebar.html}"></div>
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div th:insert="~{/general/page-titles.html}"></div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Reset Database</h4>
+                                <p class="card-text">
+                                    Clicking the button below will delete all data from the database except for user
+                                    authentication-related information (e.g., users, roles, OAuth data). This action
+                                    cannot be undone.
+                                </p>
+                                <form th:action="@{/employee/reset/database}" method="post">
+                                    <button type="submit" class="btn btn-danger m-t-20"
+                                        onclick="return confirm('Are you sure you want to reset the database? This action cannot be undone.');">
+                                        Reset Database
+                                    </button>
+                                </form>
+                                <div th:if="${successMessage}" class="alert alert-success m-t-20"
+                                    th:text="${successMessage}"></div>
+                                <div th:if="${errorMessage}" class="alert alert-danger m-t-20"
+                                    th:text="${errorMessage}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:insert="~{/general/footer.html}"></div>
+    </div>
+    <script th:src="@{/js/library/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/js/library/popper.min.js}"></script>
+    <script th:src="@{/js/library/bootstrap.min.js}"></script>
+    <script th:src="@{/js/library/perfect-scrollbar.jquery.min.js}"></script>
+    <script th:src="@{/js/library/waves.js}"></script>
+    <script th:src="@{/js/library/sidebarmenu.js}"></script>
+    <script th:src="@{/js/library/custom.min.js}"></script>
+</body>
+
+</html>

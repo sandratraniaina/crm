@@ -3,9 +3,12 @@ package site.easy.to.build.crm.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import site.easy.to.build.crm.entity.expense.LeadExpense;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "trigger_lead")
@@ -37,28 +40,46 @@ public class Lead {
     private String googleDriveFolderId;
 
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<LeadAction> leadActions;
 
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<File> files;
 
     @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<GoogleDriveFile> googleDriveFiles;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User manager;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
+    @JsonIgnore
     private User employee;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customer;
+
+    @OneToMany(mappedBy = "lead", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<LeadExpense> leadExpenses;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public double getTotalExpense() {
+        double total = 0;
+        for (LeadExpense expense : leadExpenses) {
+            total += expense.getAmount().doubleValue();
+        }
+        return total;
+    }
 
     public Lead() {
     }
@@ -216,6 +237,14 @@ public class Lead {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public List<LeadExpense> getLeadExpenses() {
+        return leadExpenses;
+    }
+
+    public void setLeadExpenses(List<LeadExpense> leadExpenses) {
+        this.leadExpenses = leadExpenses;
     }
 }
 

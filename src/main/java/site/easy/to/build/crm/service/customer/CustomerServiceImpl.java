@@ -7,11 +7,13 @@ import site.easy.to.build.crm.repository.CustomerRepository;
 import site.easy.to.build.crm.entity.Customer;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final Random random = new Random();
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -56,5 +58,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public long countByUserId(int userId) {
         return customerRepository.countByUserId(userId);
+    }
+
+    @Override
+    public Customer getRandomCustomer() {
+        List<Customer> customers = customerRepository.findAll();
+        if (customers.isEmpty()) {
+            throw new IllegalStateException("No customers available in the database");
+        }
+        return customers.get(random.nextInt(customers.size()));
     }
 }

@@ -6,12 +6,15 @@ import site.easy.to.build.crm.repository.UserRepository;
 import site.easy.to.build.crm.entity.User;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class UserServiceImpl implements UserService{
 
     @Autowired
     UserRepository userRepository;
+
+    private final Random random = new Random();
 
     @Override
     public long countAllUsers() {
@@ -51,5 +54,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User getRandomUser() {
+        List<User> users = userRepository.findAll();
+        if (users.isEmpty()) {
+            throw new IllegalStateException("No users available in the database");
+        }
+        return users.get(random.nextInt(users.size()));
     }
 }
