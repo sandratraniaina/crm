@@ -52,4 +52,9 @@ public class TicketExpenseServiceImpl implements TicketExpenseService {
         }
         ticketExpenseRepository.deleteById(id);
     }
+
+    @Override
+    public List<TicketExpense> findByCustomerId(Integer customerId) {
+        return ticketExpenseRepository.findAllTicketExpenseByCustomerId(customerId);
+    }
 }

@@ -159,8 +159,9 @@ public class ExpenseCsvImportService {
         LeadExpense leadExpense = new LeadExpense();
         String email = expenseRecord.get(0);
         String label = expenseRecord.get(1);
-        String status = expenseRecord.get(3);
         double amount = CsvValidationUtils.parseAmount(expenseRecord.get(4), "0");
+
+        String status = "meeting-to-schedule";
 
         if (!isValidLeadStatus(status)) {
             exceptions.add(new InvalidCsvFormatException(filename, lineNumber, "Invalid status value provided"));
@@ -175,8 +176,9 @@ public class ExpenseCsvImportService {
         TicketExpense ticketExpense = new TicketExpense();
         String email = expenseRecord.get(0);
         String label = expenseRecord.get(1);
-        String status = expenseRecord.get(3);
         double amount = CsvValidationUtils.parseAmount(expenseRecord.get(4), "0");
+
+        String status = "open";
 
         if (!isValidTicketStatus(status)) {
             exceptions.add(new InvalidCsvFormatException(filename, lineNumber, "Invalid status value provided"));

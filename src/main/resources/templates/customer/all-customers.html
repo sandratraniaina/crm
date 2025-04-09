@@ -91,6 +91,7 @@
                                                 <th>Email</th>
                                                 <th>Phone</th>
                                                 <th>Country</th>
+                                                <th>Export</th>
                                                 <th>Show Full Details</th>
                                                 <th>Budgets</th>
                                                 <th th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
@@ -104,6 +105,9 @@
                                                 <td th:text="${customer.email}"></td>
                                                 <td th:text="${customer.phone}"></td>
                                                 <td th:text="${customer.country}"></td>
+                                                <td >
+                                                    <a th:href="${home + 'customers/' + (customer.customerId) + '/export'}">Export</a>
+                                                </td>
                                                 <td><a th:href="${home + 'employee/customer/' + customer.customerId}"><i
                                                             class="fas fa-eye"></i></a></td>
                                                 <td th:if="${#authorization.expression('hasRole(''ROLE_MANAGER'')')}">
